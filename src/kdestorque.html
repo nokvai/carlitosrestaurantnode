@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head> 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <title>Carlitos Restaurant</title> 
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> 
+    <link href="css/sb-admin-2.min.css" rel="stylesheet"> 
+    
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script> -->
+    <script src="js/gijgo.min.js" type="text/javascript"></script>
+    <link href="css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <style>
+        .td {
+            color: #000;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+     
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                   
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                          
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+ 
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Sales</h1>
+                    <!-- <p class="mb-4 pl-2">Select a Start and End Date to Populate Sales.</p> -->
+                    <div class="container-fluid">
+                        <div class="row"> 
+                            <div class="col-lg-6">
+                                <div>
+                                    <form id="searchform" method="GET">
+                                        <div class="row pb-5">
+                                            <!-- <div class="col-md-3">
+                                                <label>User</label> 
+                                                <input type="text" name="searchuser" class="form-control" /> 
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Type</label> 
+                                                <select class="form-control" type="text" name="searchtype">
+                                                    <option value="All" selected>All</option>    
+                                                    <option value="Response">Response</option>    
+                                                    <option value="Error">Error</option>    
+                                                <select> 
+                                            </div> -->
+                                            <div class="col-md-3">
+                                                <label>Start Date</label> 
+                                                <input id="datepicker_start" name="startdate" width="150" />
+                                                <script>
+                                                    $('#datepicker_start').datepicker({
+                                                        uiLibrary: 'bootstrap4'
+                                                    });
+                                                </script> 
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>End Date</label> 
+                                                <input id="datepicker_end" name="enddate" width="150" />
+                                                <script>
+                                                    $('#datepicker_end').datepicker({
+                                                        uiLibrary: 'bootstrap4'
+                                                    });
+                                                </script> 
+                                            </div>
+                                            
+                                            <div class="col-md-2">
+                                                <button id="btnSearch" style="margin-top: 30px; " class="btn btn-success">Search</button>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div  class="table-responsive mt-2">          
+                                                    <table id="datediff" class="table">
+                                                      <thead>
+                                                        <tr>
+                                                          <th>Day(s)</th>
+                                                          <th>Week(s)</th>
+                                                          <th>Month(s)</th>
+                                                          <th>Year(s)</th>
+                                                        </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                        <tr>
+                                                          <td>0</td>
+                                                          <td>0</td>
+                                                          <td>0</td>
+                                                          <td>0</td>
+                                                        </tr>
+                                                      </tbody>
+                                                      <tfoot>
+                                                        <tr>
+                                                            <td colspan="2"><h5>Sum of Payments:</h5></td> 
+                                                            <td colspan="2" id="sumofpayments"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="4">
+                                                                <h5 id="fromToDate"></h5>
+                                                            </td>
+                                                        </tr>
+                                                      </tfoot>
+                                                    </table>
+                                                <h6 id=""></h6>
+                                            </div>
+                                        </div>
+                                         
+                                    </form> 
+                                </div> 
+                            </div> 
+                            <div class="col-lg-6">
+                               
+                            </div>
+                        </div>
+                              
+                   
+                    </div>
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <div class="col-xl-12 col-lg-12">
+
+                            <!-- Area Chart -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Order Payments</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">          
+                                        <table id="ordertable" class="table table-bordered table-striped">
+                                          <thead>
+                                            <tr> 
+                                              <th>OrderId</th>
+                                              <th>Notes</th>
+                                              <th>CustomerName</th>
+                                              <th>ContactNumber</th>
+                                              <th>TableNumber</th>
+                                              <th>TableColor</th>
+                                              <th>OrderNumber</th>
+                                              <th>NumberOfPerson</th>
+                                              <th>OrderType</th>
+                                              <th>OrderStatus</th>
+                                              <th>OrderTakenBy</th>
+                                              <th>OrderDateTime</th>
+                                              <th>PaidDateTime</th>
+                                              <th>IsPaid</th>
+                                              <th>PaymentAmount</th>
+                                              <th>Action</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            
+                                          </tbody>
+                                          <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th>Total</th>
+                                                <th id="totalSum">0.00</th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+ 
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Carlitos Restaurant 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <!-- <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+     <!-- The Modal -->
+     <div class="modal" id="modal-delete">
+        <div class="modal-dialog">
+            <div class="modal-content">
+        
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Order Confirmation</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+        
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>Are you sure you want to delete order?</p>
+                </div>
+        
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button id="btnDeleteYes" type="button" class="btn btn-success">Yes</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <!-- <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="js/demo/chart-bar-demo.js"></script> -->
+
+    <script src="js/moment.js"></script>
+
+    <script>
+
+        var SERVER_IP = "192.168.254.160";
+        var id_del = 0;
+
+        $(document).ready(function() { 
+
+            $(".gj-icon").addClass("fa fa-calendar").removeClass("gj-icon").text("").attr('aria-hidden', "true").click(function() {
+               
+               setTimeout(function() {
+                $(".chevron-left").addClass("fa fa-angle-left").removeClass("gj-icon").removeClass("chevron-left").attr('aria-hidden', "true");
+                $(".chevron-right").addClass("fa fa-angle-right").removeClass("gj-icon").removeClass("chevron-right").attr('aria-hidden', "true");
+               }, 50);   
+            }); 
+
+            setTimeout(function() {
+                $(".chevron-left").addClass("fa fa-angle-left").removeClass("gj-icon").removeClass("chevron-left").attr('aria-hidden', "true");
+                $(".chevron-right").addClass("fa fa-angle-right").removeClass("gj-icon").removeClass("chevron-right").attr('aria-hidden', "true");
+            }, 50);
+ 
+
+            /*if (localStorage.getItem('type') != null) {
+                setTimeout(function() {
+                    var type = $('select[name="searchtype"]');
+                    type.val(localStorage.getItem('type')).trigger('change'); 
+                }, 100);
+            } */
+            
+            if (localStorage.getItem('startdate') != null) {
+                var startdate = $('input[name="startdate"]');
+                startdate.val(localStorage.getItem('startdate'));
+            }
+
+            if (localStorage.getItem('enddate') != null) {
+                var enddate = $('input[name="enddate"]');
+                enddate.val(localStorage.getItem('enddate'));
+            }
+
+            $('#btnSearch').click(function(e) {
+                e.preventDefault(); 
+                //var type = $('select[name="searchtype"]');
+                var startdate = $('input[name="startdate"]');
+                var enddate = $('input[name="enddate"]');
+               
+                //console.log('type', type.val());
+                console.log('startdate', startdate.val());
+                console.log('enddate', enddate.val()); 
+
+                //localStorage.setItem('type', type.val());
+                localStorage.setItem('startdate', startdate.val());
+                localStorage.setItem('enddate', enddate.val());
+ 
+                $("#searchform").submit();
+                
+            });
+          
+            var start = moment(new Date($('input[name="startdate"]').val()), 'DD-MM-YYYY'); 
+            var end = moment(new Date($('input[name="enddate"]').val()), 'DD-MM-YYYY').add(23, 'hours').add(59, 'minutes').add(59, 'seconds'); 
+            //$("#datediff").append(`Day(s): ${} <br> Week(s): ${end.diff(start, 'weeks')} <br> Month(s): ${end.diff(start, 'months')} <br> Year(s): ${end.diff(start, 'years')}`);
+            end.add(1, 'second');
+            var tbl = $("#datediff > tbody").empty();
+            var tr = $("<tr />");
+            var td1 = $("<td />").text(end.diff(start, 'days'));
+            var td2 = $("<td />").text(end.diff(start, 'weeks'));
+            var td3 = $("<td />").text(end.diff(start, 'months'));
+            var td4 = $("<td />").text(end.diff(start, 'years'));
+            tr.append(td1).append(td2).append(td3).append(td4);
+            tbl.append(tr);
+
+            $("#fromToDate").text(`From ${start.format('MMMM Do, YYYY')} to ${end.subtract(1, 'seconds').format('MMMM Do, YYYY')}`);
+
+            var start_format = start.format("YYYY-MM-DD HH:mm:ss");
+            var end_format = end.format("YYYY-MM-DD HH:mm:ss");
+
+            console.log(`start: ${start_format} and end: ${end_format}`);
+ 
+            $.get(`http://${SERVER_IP}:5000/api/sales/sumallpayments?startdate=${start_format}&enddate=${end_format}`, function( ) {}).done(function(result) { 
+                 
+                var paymentSUM =  result[0].PaymentSUM; 
+                var formatter = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'PHP', 
+                });  
+                
+                console.log('sum: ', formatter.format(paymentSUM));
+                $("#sumofpayments").append(`<h4 style="color: #000!important;">${formatter.format(paymentSUM)}</h4>`);
+            });
+
+            var total = 0;
+
+            var formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'PHP', 
+            });
+            
+            $.get(`http://${SERVER_IP}:5000/api/sales/orders?startdate=${start_format}&enddate=${end_format}`, function( ) {}).done(function(result) { 
+
+                var tbl = $("#ordertable tbody").empty();
+                //console.log('result: ', result);
+                
+                result.map(function(d) {
+
+                    $.get(`http://${SERVER_IP}:5000/api/sales/payment/${d.OrderId}`, function() {}).done(function(result2) { 
+
+                        var PaymentAmount = result2[0].PaymentAmount;  
+                        total += PaymentAmount;
+                        $('#totalSum').text(formatter.format(total));
+
+                        console.log('sum: ', PaymentAmount);
+                        
+                            var tr = $("<tr />");
+                            var td1 = $("<td />").text(d.OrderId);
+                            var td2 = $("<td />").text(d.Notes);
+                            var td3 = $("<td />").text(d.CustomerName);
+                            var td4 = $("<td />").text(d.ContactNumber);
+                            var td5 = $("<td />").text(d.TableNumber);
+                            var td6 = $("<td />").text(d.TableColor);
+                            var td7 = $("<td />").text(d.OrderNumber);
+                            var td8 = $("<td />").text(d.NumberOfPerson);
+                            var td9 = $("<td />").text(d.OrderType);
+                            var td10 = $("<td />").text(d.OrderStatus);
+                            var td11 = $("<td />").text(d.OrderTakenBy);
+        
+                            var orderdatetime = moment.utc(d.OrderDateTime).format('h:mm:ss a - MMMM Do YYYY');
+                            var paiddate = moment.utc(d.PaidDate).format('h:mm:ss a - MMMM Do YYYY');
+        
+                            var td12 = $("<td />").text(orderdatetime); 
+                            var td13 = $("<td />").text(paiddate); 
+                            var td14 = $("<td />").text(d.IsPaid);
+                            var td15 = $("<td />").text(formatter.format(PaymentAmount));
+                          
+                            var btndelete = $("<button />").addClass("btn btn-danger").text("Delete");
+                            btndelete.click(function(e) {
+                                e.preventDefault(); 
+                                id_del = d.OrderId;
+                                $("#modal-delete").modal("show");
+                            });
+                            var td16 = $("<td />").append(btndelete);
+                            
+                            tr.append(td1);
+                            tr.append(td2);
+                            tr.append(td3);
+                            tr.append(td4);
+                            tr.append(td5);
+                            tr.append(td6);
+                            tr.append(td7);
+                            tr.append(td8);
+                            tr.append(td9);
+                            tr.append(td10);
+                            tr.append(td11);
+                            tr.append(td12);
+                            tr.append(td13);
+                            tr.append(td14);
+                            tr.append(td15);
+                            tr.append(td16);
+                            
+                            tbl.append(tr);
+                    });
+ 
+                   
+                });
+ 
+             
+
+
+             
+                
+                
+ 
+           
+               
+                 
+                /*var paymentSUM =  result[0].PaymentSUM; 
+                var formatter = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'PHP', 
+                });  
+                
+                console.log('sum: ', formatter.format(paymentSUM));
+                $("#sumofpayments").append(`<h4>${formatter.format(paymentSUM)}</h4>`);
+                */
+            });
+
+           
+
+            $("#btnDeleteYes").click(function(e) {
+                e.preventDefault(); 
+                deleteOrder(id_del);
+            });         
+              
+                                
+
+            function deleteOrder(id) { 
+               // delete payments
+               var data = {"OrderId" : id};
+               $.ajax({ 
+                    type:"POST",
+                    dataType:"json",
+                    contentType: "application/json",
+                    data:JSON.stringify(data),
+                    url: `http://${SERVER_IP}:5000/api/sales/order/delete`,
+                }).done(function(response) {
+                       console.log("delete payment response: ", response);
+                       if (response) {
+                           $("#modal-delete").modal("hide");
+                           location.reload();
+                       }
+                }).fail(function(xhr, textStatus, errorThrown){
+                      console.log("ERROR payment: " , xhr.responseText, errorThrown);
+                });
+                // delete payments
+            } 
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <title>Carlitos Restaurant</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- <link  href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet"> 
+      
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+</head> 
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper"> 
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar"> 
+         <!-- <ul class="navbar-nav sidebar sidebar-dark accordion" style="background-color: brown;" id="accordionSidebar">  -->
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+                <!-- <div class="sidebar-brand-icon rotate-n-15"> -->
+                <div class="sidebar-brand-icon">
+                    <!-- <i class="fas fa-laugh-wink"></i> -->
+                    <img src="logo.png" style="width: 60px; height: 55px" />
+                </div>
+                <div class="sidebar-brand-text mx-3"><sup>Carlitos</sup> Restaurant</div>
+            </a> 
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0"> 
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="/">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Menu
+            </div>
+ 
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Tables</span></a>
+            </li> -->
+
+            
+            <!-- <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Utilities</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item" href="utilities-color.html">Colors</a>
+                        <a class="collapse-item" href="utilities-border.html">Borders</a>
+                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
+                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                    </div>
+                </div>
+            </li>
+ 
+            <hr class="sidebar-divider"> -->
+
+            
+            <!-- <div class="sidebar-heading">
+                Addons
+            </div>
+
+           
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Pages</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Login Screens:</h6>
+                        <a class="collapse-item" href="login.html">Login</a>
+                        <a class="collapse-item" href="register.html">Register</a>
+                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Other Pages:</h6>
+                        <a class="collapse-item" href="404.html">404 Page</a>
+                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                    </div>
+                </div>
+            </li>
+
+           
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Charts</span></a>
+            </li>
+
+            
+            <li class="nav-item">
+                <a class="nav-link" href="tables.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Tables</span></a>
+            </li>
+
+            
+            <hr class="sidebar-divider d-none d-md-block"> -->
+ 
+ 
+            <!-- Sidebar Message -->
+            <!-- <div class="sidebar-card">
+                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="">
+                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
+                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
+            </div> -->
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <button id="btnBackHome" style="display: none;" class="btn btn-primary">Back</button>
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        
+                        <div id="div-search" class="input-group">
+                            <input id="search" type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+ 
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="mycart" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span id="staffname" class="mr-2 text-gray-600 small">&nbsp;My Cart</span>
+                                <i class="fa fa-shopping-cart rounded-circle" aria-hidden="true"></i>
+                               
+                                <!-- <img class="img-profile rounded-circle"
+                                    src="img/undraw_profile.svg"> -->
+                            </a>
+                            
+                            <!-- <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Activity Log
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href=# data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div> -->
+                        </li> 
+                    </ul>
+
+                 
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 id="menu-name" class="h3 mb-0 text-gray-800">Home</h1>
+                        <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
+                        <div id="menu-photo"></div>
+                    </div>
+
+                    <!-- Content Row -->
+                    <div id="items" class="row" style=" display: flex; align-items: center; justify-content: center; ">
+
+                        <div id="demo" class="carousel slide" data-ride="carousel">
+
+                              <!-- Indicators -->
+                              <ul class="carousel-indicators">
+                                <li data-target="#demo" data-slide-to="0" class="active"></li>
+                                <li data-target="#demo" data-slide-to="1"></li>
+                                <li data-target="#demo" data-slide-to="2"></li>
+                                <li data-target="#demo" data-slide-to="3"></li>
+                                <li data-target="#demo" data-slide-to="4"></li>
+                                <li data-target="#demo" data-slide-to="5"></li>
+                              </ul>
+                            
+                              <!-- The slideshow -->
+                              <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                  <img src="logo.png">
+                                </div>
+                                <div class="carousel-item">
+                                  <img src="image1.jpg">
+                                </div>
+                                <div class="carousel-item">
+                                  <img src="image2.jpg">
+                                </div>
+                                <div class="carousel-item">
+                                  <img src="image3.jpg">
+                                </div>
+                                <div class="carousel-item">
+                                  <img src="image4.jpg">
+                                </div>
+                                <div class="carousel-item">
+                                  <img src="image5.jpg">
+                                </div>
+                            </div>
+                          
+                            <!-- Left and right controls -->
+                            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                              <span class="carousel-control-prev-icon"></span>
+                            </a>
+                            <a class="carousel-control-next" href="#demo" data-slide="next">
+                              <span class="carousel-control-next-icon"></span>
+                            </a>
+                          
+                          </div>
+                          
+                       
+                        <!-- Earnings (Monthly) Card Example -->
+                        <!-- <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Earnings (Monthly)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+ 
+                    </div>
+
+                    <!-- DataTales Example -->
+                    <div id="cart" style="display: none;" class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h4 class="m-0 font-weight-bold text-primary">&nbsp;My Cart</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Item Id</th>
+                                            <th>Item Name</th>
+                                            <th>Description</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                            <th>Action</th> 
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Total</th>
+                                            <th id="totalSum">0.00</th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        <!-- <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+                                            <td>$320,800</td>
+                                        </tr>  -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <br />
+                        
+                        
+                        <div class="container-fluid"> 
+                            <h2>Order Information</h2>
+                            <form>
+                                <div class="row"> 
+                                    <div class="col-md-4"> 
+                                        <div class="form-group">
+                                            <label for="Notes">Notes</label>
+                                            <textarea class="form-control" id="Notes" rows="3"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="CustomerName">Customer Name</label>
+                                            <input type="text" class="form-control" id="CustomerName">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ContactNumber">Contact Number</label>
+                                            <input type="text" class="form-control" id="ContactNumber">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="TableNumber"><i class="fas fa-star" style="color: yellow;"></i> Table Number</label>
+                                            <input type="number" class="form-control" id="TableNumber">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="TableColor">Table Color</label>
+                                            <input type="text" class="form-control" id="TableColor">
+                                        </div>
+                                        <div class="form-group" hidden>
+                                            <label for="OrderNumber"><i class="fas fa-star" style="color: yellow;"></i> Order Number</label>
+                                            <input type="number" class="form-control" id="OrderNumber">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="NumberOfPerson">Number Of Person</label>
+                                            <input type="number" class="form-control" id="NumberOfPerson" value="1">
+                                        </div> 
+                                        <div class="form-group">
+                                            <label for="OrderType"><i class="fas fa-star" style="color: yellow;"></i> Order Type</label>
+                                            <select class="form-control" id="OrderType"> 
+                                                <option>Dine-in</option>
+                                                <option>Take-out</option>
+                                                <option>Pending Order Dine-in</option>
+                                                <option>Pending Order Take-out</option>
+                                            </select> 
+                                        </div>  
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="OrderStatus">Order Status</label>
+                                            <input type="text" class="form-control" id="OrderStatus" value="Ordering" readonly>
+                                        </div> 
+                                        <div class="form-group">
+                                            <label for="OrderTakenBy">Order Taken By</label>
+                                            <input type="text" class="form-control" id="OrderTakenBy">
+                                        </div> 
+                                        <div class="form-group">
+                                            <label for="Outlet">Outlet</label>
+                                            <select class="form-control" id="Outlet"> 
+                                                <option>Ground Floor</option>
+                                                <option>Second Floor</option> 
+                                            </select> 
+                                        </div> 
+                                    </div> 
+                                </div>
+                                <div class="row" style="padding-bottom: 50px; padding-top: 20px;">
+                                    <div class="col-md-12" style="display: flex; align-items: center; justify-content: center;">
+                                        <button id="btnSubmit" type="submit" class="btn btn-success" style="min-width: 280px; min-height: 65px;">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+                    <!-- Button to Open the Modal -->
+                    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-addcart">
+                        Open modal
+                    </button> -->
+                    
+                    <!-- The Modal -->
+                    <div class="modal" id="modal-addcart">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                        
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title"></h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                        
+                                <!-- Modal body -->
+                                <div class="modal-body">
+
+                                    <p id="modal-body-desc"></p>
+                                    <div class="container">
+                                      
+                                        <div class="row" style="display: flex;  align-items: center; justify-content: center;">
+                                            <div class="col-sm-6" style="text-align: center;">
+                                                <label for='quant[1]'><b style="color: #000;">Quantity</b></label>
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
+                                                            <i class="fa fa-minus" aria-hidden="true"></i>
+                                                        </button>
+                                                    </span> 
+                                                    <input type="text" name="itemId" class="form-control" hidden>
+                                                    <input type="text" name="itemName" class="form-control" hidden>
+                                                    <input type="text" name="itemDescription" class="form-control" hidden>
+                                                    <input type="text" name="itemPrice" class="form-control" hidden>
+                                                    <input type="text" name="quant[1]" class="form-control input-number" style="text-align: center;" value="1" min="1" max="10000">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+                                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                        
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button id="modalAddToCart" type="button" class="btn btn-success">Add to Cart</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- The Modal -->
+                    <div class="modal" id="modal-submit">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                        
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Order Confirmation</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                        
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <p>Are you sure you want to submit order?</p>
+                                </div>
+                        
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button id="btnSubmitYes" type="button" class="btn btn-success">Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+          
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Carlitos Restaurant 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <!-- <script src="js/demo/datatables-demo.js"></script> -->
+ 
+    <!-- Page level plugins -->
+    <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
+
+    <!-- Page level custom scripts -->
+    <!-- <script src="js/demo/chart-area-demo.js"></script> -->
+    <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
+    <script>
+        var orders = [];
+
+        function loadTable() {
+            if (localStorage.getItem("orders") == undefined || localStorage.getItem("orders") == "") {
+                localStorage.setItem("orders", JSON.stringify(orders));
+                $("#staffname").text(` My Cart`);
+            } else {
+                orders = JSON.parse( localStorage.getItem("orders") ); 
+                $("#staffname").text(` My Cart (${orders.length})`);
+                console.log('orders', orders);
+    
+                var formatter = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'PHP', 
+                });
+    
+                var table = $("#dataTable > tbody").empty();
+                var total = 0;
+                orders.map(function(d, i) {
+                    var tr = $("<tr />"); 
+                    var td1 = $("<td />"); 
+                    var td2 = $("<td />");
+                    var td3 = $("<td />");
+                    var td4 = $("<td />");
+                    var td5 = $("<td />");
+                    var td6 = $("<td />");
+                    var td7 = $("<td />");
+     
+                    td1.text(d.ItemId);
+                    td2.text(d.ItemName);
+                    td3.text(d.ItemDescription);
+                    td4.text(formatter.format(d.ItemPrice)); 
+                    td5.text(d.Qty);
+                    td6.text( formatter.format(d.ItemPrice * d.Qty) );
+                    var btnremove = $("<button />").text('Remove').addClass('btn btn-danger');
+                    btnremove.click(function(e) {
+                        e.preventDefault(); 
+                        var o = JSON.parse(localStorage.getItem("orders"));
+                        o.map(function(store, i) {
+                            if (store.ItemId == d.ItemId) {
+                                //    alert(store.ItemId + ' = ' + d.ItemId);
+                                orders.splice(i, 1);
+                                localStorage.setItem("orders", JSON.stringify(orders));
+                                //console.log('store id:', store.ItemId + ' = d.ItemId: ' + d.ItemId);
+                            } 
+                        });
+                        loadTable();
+                    });
+    
+                    td7.append(btnremove);
+    
+                    total += (d.ItemPrice * d.Qty);
+                    tr.append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7);
+                    table.append(tr);
+                });
+     
+                $('#totalSum').text(formatter.format(total));
+                $('#dataTable').DataTable();
+            } 
+        }
+ 
+        $(document).ready(function() { 
+
+            loadTable();
+ 
+            $("#modalAddToCart").click(function(e) {
+                e.preventDefault();
+                var id = $("input[name='itemId']").val();
+                var name = $("input[name='itemName']").val();
+                var desc = $("input[name='itemDescription']").val();
+                var price = $("input[name='itemPrice']").val();
+                var qty = $("input[name='quant[1]']").val();
+                
+                var i = {
+                    'ItemId': id,
+                    'ItemName': name,
+                    'ItemDescription': desc,
+                    'ItemPrice': price,
+                    'Qty': qty
+                };
+                orders.push(i);
+                localStorage.setItem("orders", JSON.stringify(orders) );
+                //console.log('orders: ', orders);
+ 
+                orders = JSON.parse( localStorage.getItem("orders") ); 
+                $("#staffname").text(` My Cart (${orders.length})`);
+                
+                $(`#modal-addcart`).modal('hide');
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
+            var SERVER_IP = "192.168.254.160"; // CHANGE IP ADDRESS
+            
+            for (var x=1;x<=150;x++) {
+                var opt = $("<option />").val(x).text(x);
+                $("select#TableNumber").append(opt);
+            }
+           
+            $("#search").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#items div.item-display").filter(function() {
+                  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+ 
+            $("#TableNumber").keyup(function() {
+                $("#OrderNumber").val($(this).val());
+            });
+ 
+            $("#OrderType").change(function() {
+                var ordertype = $(this).val();//$(this).find("option:selected").attr('value');      
+                if (ordertype == "Dine-in") { 
+                    $('label[for="TableNumber"]').empty().append(`<i class="fas fa-star" style="color: yellow;"></i> Table Number`);
+                } else if (ordertype == "Take-out") {
+                    $('label[for="TableNumber"]').empty().append(`<i class="fas fa-star" style="color: yellow;"></i> Order Number`);
+                } else if (ordertype == "Pending Order Dine-in") {
+                    $('label[for="TableNumber"]').empty().append(`<i class="fas fa-star" style="color: yellow;"></i> Table Number`);
+                } else if (ordertype == "Pending Order Take-out") {
+                    $('label[for="TableNumber"]').empty().append(`<i class="fas fa-star" style="color: yellow;"></i> Order Number`);
+                }
+            }).trigger('change');
+
+            function toBase64(arr) { 
+                return btoa(
+                   arr.reduce((data, byte) => data + String.fromCharCode(byte), '')
+                );
+             }
+
+             function twoDigits(d) {
+                if(0 <= d && d < 10) return "0" + d.toString();
+                if(-10 < d && d < 0) return "-0" + (-1*d).toString();
+                return d.toString();
+            }
+             
+            Date.prototype.toMysqlFormat = function() {
+                return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
+            };
+          
+            // load item categories
+            $.get(`http://${SERVER_IP}:5000/api/itemcategory/`, function( ) {}).done(function(result) {
+                //console.log(result);
+                if (result != null || result != undefined) {
+                    result.map(function(d, i) {
+                        //console.log(d.ItemCategoryName);
+                         var li = $("<li />").addClass('nav-item');
+                         var a = $("<a />").addClass('nav-link').attr('href', '#')
+                         .css({ "padding-top": "5px", "padding-bottom" : "5px" });
+                         a.click(function(e) {
+                             e.preventDefault();
+                            $('#menu-name').text(d.ItemCategoryName);
+
+                            /*var img_itemcategory_photo = $('<img />')
+                            .attr('src', `data:image/png;base64,${toBase64( d.ItemCategoryPhoto.data )}`)
+                            .css({'width': '280px', 'height': '200px'}); 
+
+                            $("#menu-photo").empty();
+                            $("#menu-photo").append(img_itemcategory_photo);
+                            */
+
+                            var items = [];
+                            $.get(`http://${SERVER_IP}:5000/api/item/searchitemcategoryname/${d.ItemCategoryName}`, function( data ) {  
+                                items = data;
+                            }).done(function() {
+                                   //console.log(items);
+                                  $("#items").empty();
+
+                                  items.map(function(item) {
+                               
+                                        var formatter = new Intl.NumberFormat('en-US', {
+                                            style: 'currency',
+                                            currency: 'PHP', 
+                                        });
+
+                                        var disabled = '';
+                                        
+                                        if (item.IsAvailable == true) {
+                                            disabled = '';
+                                        } else if (item.IsAvailable == false) {
+                                            disabled = "disabled";
+                                        }
+
+                                        if (item.ItemPrice > 0) {
+                                            disabled = '';
+                                        } else {
+                                            disabled = "disabled";
+                                        }
+                                         
+                                        var f = $(`<div class="item-display col-xl-3 col-md-6 mb-4">
+                                            <div id="${item.ItemId}" class="card border-left-primary shadow h-100 py-2">
+                                                <div class="card-body">
+                                                    <div class="row no-gutters align-items-center">
+                                                        <div class="col mr-2">
+                                                            <div class="text-sm font-weight-bold text-primary text-uppercase mb-1">
+                                                                ${item.ItemName}</div>
+                                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${formatter.format(item.ItemPrice)}</div>
+                                                            <p>${item.ItemDescription}</p>
+                                                        </div> 
+                                                    </div>
+                                                    <br />
+                                                    <div>
+                                                        <button id="addtocart${item.ItemId}" style="float: right; position: absolute; right: 10px; bottom: 10px;" class="btn btn-success" ${disabled}>Add to Card</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>`); 
+                                        $("#items").append(f);
+
+                                        $(`#addtocart${item.ItemId}`).click(function(e) {
+                                            e.preventDefault();
+                                            // console.log('clicked ', item.ItemName);
+                                           // console.log(item.ItemId);
+                                            //console.log(item.ItemName);
+                                            //console.log(item.ItemDescription);
+                                            
+                                            $("input[name='itemId']").val(item.ItemId);
+                                            $("input[name='itemName']").val(item.ItemName);
+                                            $("input[name='itemDescription']").val(item.ItemDescription);
+                                            $("input[name='itemPrice']").val(item.ItemPrice);
+                                         
+                                            $("#modal-addcart .modal-title").text(item.ItemName);
+                                            $("#modal-body-desc").text(item.ItemDescription);
+                                            $("input[name='quant[1]']").val(1);
+                                            $(`#modal-addcart`).modal('show');
+                                        });
+                                  });
+                            });
+                         });
+                         a.append("<i class='fas fa-fw fa-table'></i><span>" + d.ItemCategoryName + "</span>");
+                         li.append(a); 
+                         $('ul#accordionSidebar').append(li);
+                     });
+                }
+            });   
+
+
+            $("#btnSubmit").click(function(e) {
+                e.preventDefault();
+                $("#modal-submit").modal("show");
+            });
+
+            //---------------------------------------
+
+            $("#mycart").click(function(e) {
+                e.preventDefault();
+                loadTable();
+                cartShow(true); 
+            });
+  
+            $("#btnBackHome").click(function(e) {
+                e.preventDefault();
+                cartShow(false);
+            });
+
+            $("#btnSubmitYes").click(function(e) {
+                e.preventDefault();
+                submitOrder();
+            });
+
+            function submitOrder() { 
+                var ordertypeid = 0;
+                if ($('#OrderType').val() == 'Dine-in') {
+                    ordertypeid = 1;
+                } else if ($('#OrderType').val() == 'Take-out') { 
+                    ordertypeid = 2;
+                } else if ($('#OrderType').val() == 'Pending Order Dine-in') { 
+                    ordertypeid = 3;
+                } else if ($('#OrderType').val() == 'Pending Order Take-out') { 
+                    ordertypeid = 4;
+                }
+                var outletid = 0;
+                if ($('#Outlet').val() == 'Ground Floor') {
+                    outletid = 1;
+                } else if ($('#Outlet').val() == 'Second Floor') {
+                    outletid = 2;
+                }
+
+               var data = {
+                    "Notes" : $('#Notes').val(),
+                    "CustomerName": $('#CustomerName').val(),
+                    "ContactNumber": $('#ContactNumber').val(),
+                    "TableNumber": $('#TableNumber').val(),
+                    "TableColor": $('#TableColor').val(),
+                    "OrderNumber": $('#OrderNumber').val(),
+                    "NumberOfPerson": $('#NumberOfPerson').val(),
+                    "OrderTypeId": ordertypeid,
+                    "OrderStatusId": 1,
+                    "OrderTakenBy": $('#OrderTakenBy').val(),
+                    //"OrderDateTime":  new Date(),
+                    "PrepareTime": 0,
+                    "IsPaid": 0,
+                    "RestaurantId": 1,
+                    "OutletId": outletid,
+                    "StaffId": 3
+                };
+  
+               $.ajax({
+                    type:"POST",
+                    dataType:"json",
+                    contentType: "application/json",
+                    data:JSON.stringify(data),
+                    url: `http://${SERVER_IP}:5000/api/order/add`,
+                }).done(function(response) {
+                    console.log("Response of update: ", response);
+                    if (response.length) {
+                         var orderid = response[0][0].LastIdentity;
+                         console.log('orderid: ', orderid);
+                       
+                         var o = JSON.parse(localStorage.getItem("orders"));
+                         o.map(function(d, i) {  
+                            var dataitem = {
+                                "OrderId": orderid,
+                                "ItemId": d.ItemId, 
+                                "ItemCost": 0, 
+                                "ItemPrice": d.ItemPrice,
+                                "Quantity": d.Qty
+                            } 
+                            addorderitem(dataitem);
+                         }); 
+
+                        /* var paymentdata = {
+                            "OrderId": orderid,
+                            "PaymentTypeId": 1,
+                            "IsDiscounted": 0,
+                            "DiscountPercent": 0,
+                            "Discount": 0.00,
+                            "PaymentAmount": 0.00,
+                            "Cash": 0.00,
+                            "Change": 0.00,
+                            "OtherDetails": ""
+                        }
+
+                        addpayment(paymentdata); */ 
+                         
+                         $("#modal-submit").modal("hide");
+
+                         alert('Order has been submitted with order id: ' + orderid);  
+                         
+                        localStorage.setItem("orders", []); 
+                        localStorage.clear();
+                        location.reload();
+                        
+                    } 
+                }).fail(function(xhr, textStatus, errorThrown){
+                      console.log("ERROR: ",xhr.responseText) 
+                      $("#modal-submit").modal("hide");
+                      alert('Failed to submit order. Refresh page and try again.');
+                });
+            }
+
+
+            function addorderitem(data) {
+                $.ajax({
+                    type:"POST",
+                    dataType:"json",
+                    contentType: "application/json",
+                    data:JSON.stringify(data),
+                    url: `http://${SERVER_IP}:5000/api/orderitem/add`,
+                }).done(function(response) {
+                     console.log('response add order: ', response);
+                }).fail(function(xhr, textStatus, errorThrown){
+                      console.log("ERROR add order: ", xhr.responseText) 
+                });  
+            }
+
+            /* function addpayment(data) {
+                $.ajax({
+                    type:"POST",
+                    dataType:"json",
+                    contentType: "application/json",
+                    data:JSON.stringify(data),
+                    url: `http://${SERVER_IP}:5000/api/payments/add`,
+                }).done(function(response) {
+                     console.log('response add payment: ', response);
+                }).fail(function(xhr, textStatus, errorThrown){
+                      console.log("ERROR add payment: ", xhr.responseText) 
+                });  
+            } */
+
+            
+
+            function cartShow(show_cart) {
+                if (show_cart) {
+                    $("#items").hide();
+                    $("#menu-name").hide()
+                    $("#accordionSidebar").hide();
+                    $("#div-search").hide();
+                    $("#btnBackHome").show()
+                    $("#cart").show();
+                } else {
+                    $("#items").show();
+                    $("#menu-name").show()
+                    $("#accordionSidebar").show();
+                    $("#div-search").show();
+                    $("#btnBackHome").hide()
+                    $("#cart").hide();
+                }
+             
+            }
+
+            //---------------------------------------
+
+ 
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.btn-number').click(function(e){
+                e.preventDefault();
+                
+                fieldName = $(this).attr('data-field');
+                type      = $(this).attr('data-type');
+                var input = $("input[name='"+fieldName+"']");
+                var currentVal = parseInt(input.val());
+                if (!isNaN(currentVal)) {
+                    if(type == 'minus') {
+                        
+                        if(currentVal > input.attr('min')) {
+                            input.val(currentVal - 1).change();
+                        } 
+                        if(parseInt(input.val()) == input.attr('min')) {
+                            $(this).attr('disabled', true);
+                        }
+
+                    } else if(type == 'plus') {
+
+                        if(currentVal < input.attr('max')) {
+                            input.val(currentVal + 1).change();
+                        }
+                        if(parseInt(input.val()) == input.attr('max')) {
+                            $(this).attr('disabled', true);
+                        }
+
+                    }
+                } else {
+                    input.val(0);
+                }
+            });
+            $('.input-number').focusin(function(){
+                $(this).data('oldValue', $(this).val());
+            });
+
+            $('.input-number').change(function() { 
+                minValue =  parseInt($(this).attr('min'));
+                maxValue =  parseInt($(this).attr('max'));
+                valueCurrent = parseInt($(this).val());
+                
+                name = $(this).attr('name');
+                if(valueCurrent >= minValue) {
+                    $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+                } else {
+                    alert('Sorry, the minimum value was reached');
+                    $(this).val($(this).data('oldValue'));
+                }
+                if(valueCurrent <= maxValue) {
+                    $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+                } else {
+                    alert('Sorry, the maximum value was reached');
+                    $(this).val($(this).data('oldValue'));
+                }  
+            });
+
+            $(".input-number").keydown(function (e) {
+                // Allow: backspace, delete, tab, escape, enter and .
+                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+                    // Allow: Ctrl+A
+                    (e.keyCode == 65 && e.ctrlKey === true) || 
+                    // Allow: home, end, left, right
+                    (e.keyCode >= 35 && e.keyCode <= 39)) {
+                        // let it happen, don't do anything
+                        return;
+                }
+                // Ensure that it is a number and stop the keypress
+                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

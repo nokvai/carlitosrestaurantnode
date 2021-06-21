@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head> 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <title>Carlitos Restaurant</title> 
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> 
+    <link href="css/sb-admin-2.min.css" rel="stylesheet"> 
+    
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script> -->
+    <script src="js/gijgo.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <link href="css/gijgo.min.css" rel="stylesheet" type="text/css" />  
+   
+    <link rel="stylesheet" href="css/vanillaSelectBox.css">
+    <style>
+        .demo-zone {
+            display: block;
+            width: 100%; 
+        }
+    </style>
+    
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+     
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                   
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                          
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+ 
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Sales</h1>
+                    <!-- <p class="mb-4 pl-2">Select a Start and End Date to Populate Sales.</p> -->
+                    <div class="container-fluid">
+                        <div class="row"> 
+                            <div class="col-md-8"> 
+                                <form id="searchform" method="GET">
+                                    <div class="row"> 
+                                        <div class="col-md-4">
+                                            <label>Start Date</label> 
+                                            <input id="datepicker_start" name="startdate" width="150" />
+                                            <script>
+                                                $('#datepicker_start').datepicker({
+                                                    uiLibrary: 'bootstrap4'
+                                                });
+                                            </script> 
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>End Date</label> 
+                                            <input id="datepicker_end" name="enddate" width="150" />
+                                            <script>
+                                                $('#datepicker_end').datepicker({
+                                                    uiLibrary: 'bootstrap4'
+                                                });
+                                            </script> 
+                                        </div>
+                                        
+                                        <div class="col-md-3">
+                                            <button id="btnSearch" style="margin-top: 30px; " class="btn btn-success">Search</button>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div  class="table-responsive mt-2">          
+                                                <table id="datediff" class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Day(s)</th>
+                                                        <th>Week(s)</th>
+                                                        <th>Month(s)</th>
+                                                        <th>Year(s)</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>0</td>
+                                                        <td>0</td>
+                                                        <td>0</td>
+                                                        <td>0</td>
+                                                    </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan="2"><h5>Sum of Payments:</h5></td> 
+                                                            <td colspan="2" id="sumofpayments"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="4">
+                                                                <h5 id="fromToDate"></h5>
+                                                            </td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            <h6 id=""></h6>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </form>  
+                            </div> 
+                            <div class="col-md-12">
+                                <h2>Sales Item</h2>
+                                <div class="container-fluid"> 
+                                   <div class="row">
+                                           <!-- <button id="btngetvalues" class="btn btn-success">Get Values</button> -->
+                                        <div class="col-md-10">
+                                            <label>Filter Category: </label>
+                                            <div class="demo-zone" style="width:30%;display:inline-block;"> 
+                                                <select id="selectCategory" multiple="" size="4" style="display: inline-block;">
+                                                    <!-- <option value="DACIA" selected="true">DACIA</option> -->
+                                                </select>  
+                                            </div> 
+                                            <button id="btnreloadnamefilter" class="btn btn-success">Reload Name Filter</button>
+                                        </div> 
+                                   </div>
+                                   <div class="row pt-2">
+                                        <div class="col-md-10">
+                                            <label>Filter Name:  &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                            <div class="demo-zone" style="width:30%;display:inline-block;"> 
+                                                <select id="selectName" multiple="" size="4" style="min-width: 400px; display: inline-block;">
+                                                    <!-- <option value="DACIA" selected="true">DACIA</option> -->
+                                                </select>  
+                                            </div>
+                                            <button id="btnloaditems" class="btn btn-success">Load Items</button>
+                                        </div> 
+                                   </div> 
+                                    <div class="row pt-3">
+                                        <div class="col-md-12">
+                                            <table class="table table-bordered table-striped" id="sales-count">
+                                                <thead>
+                                                  <tr>
+                                                    <th>No.</th>
+                                                    <th>Name</th>
+                                                    <th>Description</th>
+                                                    <th>Category</th>
+                                                    <th>Count</th> 
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td> 
+                                                  </tr> 
+                                                </tbody>
+                                                <tfoot>
+                                                  <tr>
+                                                      <td></td>
+                                                      <td></td>
+                                                      <td></td>
+                                                      <td>Overall Count:</td>
+                                                      <td id="sumofcount">0</td>
+                                                      <td></td> 
+                                                  </tr> 
+                                                </tfoot>
+                                              </table>
+                                        </div>
+                                    </div>
+
+
+                                  </div>
+                            </div>
+                        </div>
+                              
+                   
+                    </div>
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <div class="col-xl-8 col-lg-7">
+
+                            
+
+                            <!-- Area Chart -->
+                            <!-- <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="myAreaChart"></canvas>
+                                    </div>
+                                    <hr>
+                                    Styling for the area chart can be found in the
+                                    <code>/js/demo/chart-area-demo.js</code> file.
+                                </div>
+                            </div> -->
+
+                            <!-- Bar Chart -->
+                            <!-- <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Bar Chart</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-bar">
+                                        <canvas id="myBarChart"></canvas>
+                                    </div>
+                                    <hr>
+                                    Styling for the bar chart can be found in the
+                                    <code>/js/demo/chart-bar-demo.js</code> file.
+                                </div>
+                            </div> -->
+
+                        </div>
+
+                        <!-- Donut Chart -->
+                        <!-- <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+                             
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Donut Chart</h6>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <div class="chart-pie pt-4">
+                                        <canvas id="myPieChart"></canvas>
+                                    </div>
+                                    <hr>
+                                    Styling for the donut chart can be found in the
+                                    <code>/js/demo/chart-pie-demo.js</code> file.
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Carlitos Restaurant 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <!-- <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <!-- <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="js/demo/chart-bar-demo.js"></script> -->
+
+    <script src="js/moment.js"></script>
+
+
+    <script src="js/vanillaSelectBox.js"></script>
+
+
+
+    <script>
+
+        var SERVER_IP = "192.168.254.160";
+
+        $(document).ready(function() { 
+
+            $(".gj-icon").addClass("fa fa-calendar").removeClass("gj-icon").text("").attr('aria-hidden', "true").click(function() {
+               
+               setTimeout(function() {
+                $(".chevron-left").addClass("fa fa-angle-left").removeClass("gj-icon").removeClass("chevron-left").attr('aria-hidden', "true");
+                $(".chevron-right").addClass("fa fa-angle-right").removeClass("gj-icon").removeClass("chevron-right").attr('aria-hidden', "true");
+               }, 50);   
+            }); 
+
+            setTimeout(function() {
+                $(".chevron-left").addClass("fa fa-angle-left").removeClass("gj-icon").removeClass("chevron-left").attr('aria-hidden', "true");
+                $(".chevron-right").addClass("fa fa-angle-right").removeClass("gj-icon").removeClass("chevron-right").attr('aria-hidden', "true");
+            }, 50);
+ 
+        });
+            /*if (localStorage.getItem('type') != null) {
+                setTimeout(function() {
+                    var type = $('select[name="searchtype"]');
+                    type.val(localStorage.getItem('type')).trigger('change'); 
+                }, 100);
+            } */
+            
+            if (localStorage.getItem('startdate') != null) {
+                var startdate = $('input[name="startdate"]');
+                startdate.val(localStorage.getItem('startdate'));
+            }
+
+            if (localStorage.getItem('enddate') != null) {
+                var enddate = $('input[name="enddate"]');
+                enddate.val(localStorage.getItem('enddate'));
+            }
+
+            $('#btnSearch').click(function(e) {
+                e.preventDefault(); 
+                //var type = $('select[name="searchtype"]');
+                var startdate = $('input[name="startdate"]');
+                var enddate = $('input[name="enddate"]');
+               
+                //console.log('type', type.val());
+                console.log('startdate', startdate.val());
+                console.log('enddate', enddate.val()); 
+
+                //localStorage.setItem('type', type.val());
+                localStorage.setItem('startdate', startdate.val());
+                localStorage.setItem('enddate', enddate.val());
+ 
+                $("#searchform").submit();
+                
+            });
+          
+            var start = moment(new Date($('input[name="startdate"]').val()), 'DD-MM-YYYY'); 
+            var end = moment(new Date($('input[name="enddate"]').val()), 'DD-MM-YYYY').add(23, 'hours').add(59, 'minutes').add(59, 'seconds'); 
+            
+            end.add(1, 'second');
+            var tbl = $("#datediff > tbody").empty();
+            var tr = $("<tr />");
+            var td1 = $("<td />").text(end.diff(start, 'days'));
+            var td2 = $("<td />").text(end.diff(start, 'weeks'));
+            var td3 = $("<td />").text(end.diff(start, 'months'));
+            var td4 = $("<td />").text(end.diff(start, 'years'));
+            tr.append(td1).append(td2).append(td3).append(td4);
+            tbl.append(tr);
+
+            $("#fromToDate").text(`From ${start.format('MMMM Do, YYYY')} to ${end.subtract(1, 'seconds').format('MMMM Do, YYYY')}`);
+
+            var start_format = start.format("YYYY-MM-DD HH:mm:ss");
+            var end_format = end.format("YYYY-MM-DD HH:mm:ss");
+
+            console.log(`start: ${start_format} and end: ${end_format}`);
+ 
+            $.get(`http://${SERVER_IP}:5000/api/sales/sumallpayments?startdate=${start_format}&enddate=${end_format}`, function( ) {}).done(function(result) { 
+                 
+                var paymentSUM =  result[0].PaymentSUM; 
+                var formatter = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'PHP', 
+                });  
+                
+                console.log('sum: ', formatter.format(paymentSUM));
+                $("#sumofpayments").append(`<h4 style="color: #000!important;">${formatter.format(paymentSUM)}</h4>`);
+            });
+
+
+             
+       
+    </script>
+ 
+    <script>  
+        $(document).ready(function() {
+
+            $.get(`http://${SERVER_IP}:5000/api/items/category`, function( ) {}).done(function(result) {  
+                let selectCat = document.getElementById("selectCategory");
+                result.map(function(d) { 
+                   // console.log(d.ItemCategoryName);
+                    var option = document.createElement("option");
+                    option.value = d.ItemCategoryName;
+                    option.text = d.ItemCategoryName;
+                    option.setAttribute("selected", true);
+                    selectCat.appendChild(option); 
+                }); 
+ 
+                var selectBoxCategory = new vanillaSelectBox("#selectCategory", {
+                    "maxHeight": 200, 
+                    "search": false ,
+                    "translations": { "all": "All", "items": "items","selectAll":"Check All","clearAll":"Clear All"}
+                }); 
+                // setValues(selectBoxCategory, ['Alpine', 'Audi', 'DACIA']); 
+                $("#btngetvalues").click(function() {
+                    console.log('getvalues: ', getValues("selectCategory"));
+                });
+
+                loadnamefilter();
+ 
+
+            });
+
+
+            $("#btnreloadnamefilter").click(function() {
+                loadnamefilter();
+            });
+
+            function loadnamefilter() {
+                 //---------------------------------------------------------------------------------------
+                 var selcat = getValues("selectCategory"); 
+                 var arr = selcat.map(function(cat) { return "'" + cat + "'" }).join(",");
+  
+                 $.get(`http://${SERVER_IP}:5000/api/items/list/bycategory?category=${arr}`, function( ) {}).done(function(result) {  
+                     $("#selectName").empty();
+                     let selectNm = document.getElementById("selectName");
+                     result.map(function(d) {  
+                         var option = document.createElement("option");
+                         option.value = d.ItemId;
+                         option.text = d.ItemName;//.substring(0, 27);
+                         option.setAttribute("selected", true);
+                         selectNm.appendChild(option); 
+                     });  
+                     var selectBoxName = new vanillaSelectBox("#selectName", {
+                         "maxHeight": 200,  
+                         "search": false ,
+                         "translations": { "all": "All", "items": "items","selectAll":"Check All","clearAll":"Clear All"}
+                     }); 
+
+                     $(".multi").css({"min-width": "400px"});
+ 
+                     // setValues(selectBoxCategory, ['Alpine', 'Audi', 'DACIA']); 
+                     //$("#btngetvalues").click(function() {
+                    //     console.log('getvalues: ', getValues("selectName"));
+                     //});
+                 });
+            }
+  
+        }); 
+
+
+        function setValues(selectBoxTest, value) {
+            if (selectBoxTest != null) {
+                selectBoxTest.setValue(value); 
+            }
+        }
+
+        function getValues(id) {
+            let result = [];
+            let collection = document.querySelectorAll("#" + id + " option");
+            collection.forEach(function (x) {
+                if (x.selected) {
+                    result.push(x.value);
+                }
+            });
+            return result;
+        }
+    
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            $("#btnloaditems").click(function() {
+                var selNn = getValues("selectName");  
+                //var arr = selNn.map(function(n) { return "'" + n + "'" }).join(",");
+               // console.log('selectName: ', selNn);
+                loaditems(selNn);
+            });
+        });
+
+         function loaditems(itemids) {
+            $.get(`http://${SERVER_IP}:5000/api/items/list?itemids=${itemids}`, function( ) {}).done(function(result) { 
+
+                //console.log('list: ', result);
+                 var tbl2 = $("#sales-count tbody").empty();
+                 var totalcount = 0;
+                 result.map(function(d, i) {  
+                         $.get(`http://${SERVER_IP}:5000/api/salescount/?startdate=${start_format}&enddate=${end_format}&itemid=${d.ItemId}`, function() {}).done(function(result2) { 
+                             //var dt = moment.utc(d.PaidDate).format('h:mm:ss a - MMMM Do YYYY'); 
+                             var item_count = 0; 
+                             if (result2[0].Count == null) {
+                                item_count = 0;
+                             } else {
+                                 item_count = result2[0].Count;
+                             }
+                             //console.log(`${d.ItemName} : ${item_count}`);
+                             var tr = $("<tr />");
+                             var td1 = $("<td />").text(i+1);
+                             var td2 = $("<td />").text(d.ItemName);
+                             var td3 = $("<td />").text(d.ItemDescription);
+                             var td4 = $("<td />").text(d.ItemCategoryName);
+                             var td5 = $("<td />");
+                             if (item_count > 0) {
+                                 td5.append(`<b style="color: #000;">${item_count}</b>`); 
+                             } else {
+                                 td5.text(item_count); 
+                             }
+                            
+                             totalcount += item_count;
+                             //var td6 = $("<td />").text(dt);
+                             tr.append(td1).append(td2).append(td3).append(td4).append(td5);//.append(td6);
+                             tbl2.append(tr);  
+                             $("td#sumofcount").text(totalcount);
+                         });   
+                 });  
+             });
+         }
+    </script>
+</body>
+
+</html>

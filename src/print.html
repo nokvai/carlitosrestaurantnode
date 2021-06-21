@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <title>Carlitos Restaurant</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- <link  href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet"> 
+      
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <style>
+        /* * {
+            font-size: 12px;
+            font-family: 'Times New Roman';
+        }
+        */
+
+        .print-td,
+        .print-th,
+        .print-tr,
+        .print-table {
+            border-top: 1px solid black;
+            border-collapse: collapse;
+        }
+        
+        .print-td.description,
+        .print-th.description {
+            width: 75px;
+            max-width: 75px;
+        }
+        
+        .print-td.quantity,
+        .print-th.quantity {
+            width: 40px;
+            max-width: 40px;
+            word-break: break-all;
+        }
+        
+        .print-td.price,
+        .print-th.price {
+            width: 40px;
+            max-width: 40px;
+            word-break: break-all;
+        }
+        
+        .centered {
+            text-align: center;
+            align-content: center;
+        }
+        
+        .ticket {
+            width: 155px;
+            max-width: 155px;
+            font-size: 12px;
+            font-family: 'Times New Roman';
+        }
+        
+        .print-img {
+            max-width: inherit;
+            width: inherit;
+        }
+        
+        @media print {
+            .hidden-print,
+            .hidden-print * {
+                display: none !important;
+            }
+        }
+    </style>
+</head> 
+<body> 
+ 
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <script src="js/moment.js"></script>
+  
+    <script>   
+        var SERVER_IP = "192.168.254.160"; // CHANGE IP ADDRESS 
+
+        $(document).ready(function() {  
+            var orderid = "{{orderid}}";
+            $.get(`http://${SERVER_IP}:5000/api/kitchen/searchorderitems/${orderid}`, function( ) {}).done(function(result) {
+                console.log(result)
+                printDiv("{{tableno}}", "{{ordertype}}", "{{orderdatetime}}", "{{ordertakenby}}", "{{notes}}", result);
+            });
+             
+            function printDiv(tableno, ordertype, orderdatetime, ordertakenby, note, items = []) { 
+                var a = window.open('', '', 'height=500, width=500');
+                a.document.write('<html>');
+                a.document.write('<head>');
+                a.document.write(`<style>
+                    * {
+                        font-size: 12px;
+                        font-family: 'Times New Roman';
+                    }
+                    
+                    td,
+                    th,
+                    tr,
+                    table {
+                        border-top: 1px solid black;
+                        border-collapse: collapse;
+                    }
+                    
+                    td.description,
+                    th.description {
+                        width: 75px;
+                        max-width: 75px;
+                    }
+                    
+                    td.quantity,
+                    th.quantity {
+                        width: 40px;
+                        max-width: 40px;
+                        word-break: break-all;
+                    }
+                    
+                    td.price,
+                    th.price {
+                        width: 40px;
+                        max-width: 40px;
+                        word-break: break-all;
+                    }
+                    
+                    .centered {
+                        text-align: center;
+                        align-content: center;
+                    }
+                    
+                    .ticket {
+                        width: 155px;
+                        max-width: 155px;
+                    }
+                    
+                    img {
+                        max-width: inherit;
+                        width: inherit;
+                    }
+                    
+                    @media print {
+                        .hidden-print,
+                        .hidden-print * {
+                            display: none !important;
+                        }
+                    } 
+                </style>`);
+                a.document.write('</head>');
+                a.document.write('<body>');
+                tr = ``;
+                items.map(function(d) {
+                    var formatter = new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: 'PHP', 
+                    });
+                    var price = String(formatter.format(d.ItemPrice) + "").replace("PHP", "");
+                    tr += `<tr>
+                        <td class="quantity" style="text-align: center;">${d.Quantity}</td>
+                        <td class="description" style="text-align: center;">${d.ItemName}</td>
+                        <td class="description" style="text-align: center;">${price}</td>
+                    </tr>`
+                });
+                a.document.write(`
+                <div id="ticket" class="ticket">
+                    <div style="display: flex; align-items: center; justify-content: center;"> 
+                        <img src="logo.png" alt="Logo" style="height: 80px;width: 90px;"> 
+                    </div>
+                    <p class="centered">Table No. ${tableno}
+                        <br><b>${ordertype}</b>
+                        <br>${orderdatetime}
+                    </p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="quantity">Qty</th>
+                                <th class="description">Name</th>
+                                <th class="price">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           ${tr}
+                        </tbody>
+                    </table>
+                    <p class="centered">Order Taken by: ${ordertakenby}
+                        <br> Note: ${note}
+                        <br><br>Tab Slip Only
+                        <br>Printed from Carlito's Cashier</p>
+                      
+                    <br>
+                    <p>--------------------------------------</p>
+                    <br>
+                </div>
+                `);
+                a.document.write('</body></html>');
+                a.document.close();
+               setTimeout(function() {
+                a.print();
+               }, 2000);
+            }
+             
+        });
+    </script>
+ 
+</body>
+</html>

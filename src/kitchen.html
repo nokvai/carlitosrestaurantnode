@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="favicon.ico"> 
+    <title>Carlitos Restaurant</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- <link  href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"> -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet"> 
+      
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <style>
+        /* * {
+            font-size: 12px;
+            font-family: 'Times New Roman';
+        }
+        */
+
+        .print-td,
+        .print-th,
+        .print-tr,
+        .print-table {
+            border-top: 1px solid black;
+            border-collapse: collapse;
+        }
+        
+        .print-td.description,
+        .print-th.description {
+            width: 75px;
+            max-width: 75px;
+        }
+        
+        .print-td.quantity,
+        .print-th.quantity {
+            width: 40px;
+            max-width: 40px;
+            word-break: break-all;
+        }
+        
+        .print-td.price,
+        .print-th.price {
+            width: 40px;
+            max-width: 40px;
+            word-break: break-all;
+        }
+        
+        .centered {
+            text-align: center;
+            align-content: center;
+        }
+        
+        .ticket {
+            width: 155px;
+            max-width: 155px;
+            font-size: 12px;
+            font-family: 'Times New Roman';
+        }
+        
+        .print-img {
+            max-width: inherit;
+            width: inherit;
+        }
+        
+        @media print {
+            .hidden-print,
+            .hidden-print * {
+                display: none !important;
+            }
+        }
+    </style>
+</head> 
+<body id="page-top"> 
+
+    <div id="wrapper">  
+        <div id="content-wrapper" class="d-flex flex-column"> 
+            <div id="content"> 
+
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"> 
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"> 
+                        <div id="div-search" class="input-group"> 
+                            <input id="search" type="text" class="form-control bg-light border-0 small" placeholder="Search for Table No."
+                                aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                     
+                   
+                    <ul class="navbar-nav ml-auto"> 
+                       
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a> 
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+ 
+                        <div class="topbar-divider d-none d-sm-block"></div>  
+                        <li class="nav-item dropdown no-arrow"> 
+                            <button id="btndinein" type="buttom" class="btn btn-primary">Dine-in</button>
+                        </li> 
+
+                         &nbsp;
+                        <li class="nav-item dropdown no-arrow"> 
+                            <button id="btntakeout" type="buttom" class="btn btn-warning">Take-out</button>
+                        </li> 
+
+                        &nbsp;
+                        <li class="nav-item dropdown no-arrow"> 
+                            <button id="btnpendingorderdinein" type="buttom" class="btn btn-info">Pending Order Dine-in</button>
+                        </li>
+
+                        &nbsp;
+                        <li class="nav-item dropdown no-arrow"> 
+                            <button id="btnpendingordertakeout" type="buttom" class="btn btn-danger">Pending Order Take-out</button>
+                        </li>
+                    </ul> 
+                </nav>
+
+                <div class="d-sm-flex align-items-center justify-content-between mb-4 pl-4 pr-4">
+                    <h1 id="order-type" class="h3 mb-0 text-gray-800">Order Type</h1>
+                </div> 
+                
+                <div class="container-fluid">
+                    <div id="orders" class="row">
+                            <!-- <div class="col-md-4"> 
+                                <div class="card"> 
+                                    <div class="card-body">
+                                        <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    </div> 
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"> 
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="check1" checked>
+                                                <label class="custom-control-label" for="check1">Check me</label>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item"> 
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="check2">
+                                                <label class="custom-control-label" for="check2">Check me</label>
+                                            </div>
+                                        </li> 
+                                    </ul>
+                                    <div class="card-footer text-center"> 
+                                        <button class="btn btn-success">DONE</button>
+                                    </div>
+                                </div>  
+                            </div>  -->
+
+                             
+                    </div>  
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+             <!-- The Modal -->
+             <div class="modal" id="modal-details">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title"></h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <table id="modal-table" class="table table-dark"> 
+                                <tbody>
+                                  <tr>
+                                    <td>1</td> 
+                                    <td>1</td> 
+                                  </tr> 
+                                  <tr>
+                                    <td>1</td> 
+                                    <td>1</td> 
+                                  </tr> 
+                                  <tr>
+                                    <td>1</td> 
+                                    <td>1</td> 
+                                  </tr> 
+                                  <tr>
+                                    <td>1</td> 
+                                    <td>1</td> 
+                                  </tr> 
+                                </tbody>
+                              </table>
+                            <p id="modal-body-desc"></p>
+                             
+                        </div>
+                
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+ 
+            <!-- The Modal -->
+            <!-- <div class="modal" id="modal-print">
+                <div class="modal-dialog">
+                    <div class="modal-content"> 
+                        <div class="modal-header">
+                            <h4 class="modal-title">Print </h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div> 
+                        <div class="modal-body"> 
+                        </div> 
+                        <div class="modal-footer">
+                            <button id="btnPrint" type="button" class="btn btn-success">Print</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        </div> 
+                    </div>
+                </div>
+            </div> -->
+   
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Carlitos Restaurant 2021</span>
+                   
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <!-- <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <script src="js/moment.js"></script>
+  <!-- <script src="js/moment-with-locales.min.js"></script> -->
+    <script>
+        var orders = [];
+
+        function loadTable() {
+            if (localStorage.getItem("orders") == undefined || localStorage.getItem("orders") == "") {
+                localStorage.setItem("orders", JSON.stringify(orders));
+                $("#staffname").text(` My Cart`);
+            } else {
+                orders = JSON.parse( localStorage.getItem("orders") ); 
+                $("#staffname").text(` My Cart (${orders.length})`);
+                console.log('orders', orders);
+    
+                var formatter = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'PHP', 
+                });
+    
+                var table = $("#dataTable > tbody").empty();
+                var total = 0;
+                orders.map(function(d, i) {
+                    var tr = $("<tr />"); 
+                    var td1 = $("<td />"); 
+                    var td2 = $("<td />");
+                    var td3 = $("<td />");
+                    var td4 = $("<td />");
+                    var td5 = $("<td />");
+                    var td6 = $("<td />");
+                    var td7 = $("<td />");
+     
+                    td1.text(d.ItemId);
+                    td2.text(d.ItemName);
+                    td3.text(d.ItemDescription);
+                    td4.text(formatter.format(d.ItemPrice)); 
+                    td5.text(d.Qty);
+                    td6.text( formatter.format(d.ItemPrice * d.Qty) );
+                    var btnremove = $("<button />").text('Remove').addClass('btn btn-danger');
+                    btnremove.click(function(e) {
+                        e.preventDefault(); 
+                        var o = JSON.parse(localStorage.getItem("orders"));
+                        o.map(function(store, i) {
+                            if (store.ItemId == d.ItemId) {
+                                //    alert(store.ItemId + ' = ' + d.ItemId);
+                                orders.splice(i, 1);
+                                localStorage.setItem("orders", JSON.stringify(orders));
+                                //console.log('store id:', store.ItemId + ' = d.ItemId: ' + d.ItemId);
+                            } 
+                        });
+                        loadTable();
+                    });
+    
+                    td7.append(btnremove);
+    
+                    total += (d.ItemPrice * d.Qty);
+                    tr.append(td1).append(td2).append(td3).append(td4).append(td5).append(td6).append(td7);
+                    table.append(tr);
+                });
+     
+                $('#totalSum').text(formatter.format(total));
+                $('#dataTable').DataTable();
+            } 
+        }
+ 
+        $(document).ready(function() { 
+
+            loadTable();
+
+            $("#search").on("keyup", function() {
+                var value = $(this).val().toLowerCase(); 
+                $("#orders > .col-md-4 > .card > .card-body > h5").filter(function() {
+                  var parent = $(this).parent().parent().parent();
+                  parent.toggle(parent.text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+ 
+            $("#modalAddToCart").click(function(e) {
+                e.preventDefault();
+                var id = $("input[name='itemId']").val();
+                var name = $("input[name='itemName']").val();
+                var desc = $("input[name='itemDescription']").val();
+                var price = $("input[name='itemPrice']").val();
+                var qty = $("input[name='quant[1]']").val();
+                
+                var i = {
+                    'ItemId': id,
+                    'ItemName': name,
+                    'ItemDescription': desc,
+                    'ItemPrice': price,
+                    'Qty': qty
+                };
+                orders.push(i);
+                localStorage.setItem("orders", JSON.stringify(orders) );
+                //console.log('orders: ', orders);
+ 
+                orders = JSON.parse( localStorage.getItem("orders") ); 
+                $("#staffname").text(` My Cart (${orders.length})`);
+                
+                $(`#modal-addcart`).modal('hide');
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
+            var SERVER_IP = "192.168.0.20"; // CHANGE IP ADDRESS
+            //var z = 0;
+            if (localStorage.getItem("load") != undefined) {
+                console.log('Load not undefined');
+                //var timer_interval = setInterval(function() {
+                    load_orders( localStorage.getItem("load") );
+                   
+                    storageGetSetCheckBox();
+                    //z++;
+                    //console.log('interval: ', z)
+                //}, 5000);   
+            }
+
+
+
+            // clearInterval(timer_interval);
+
+
+            function timeDifference(current, previous) {
+    
+                var msPerMinute = 60 * 1000;
+                var msPerHour = msPerMinute * 60;
+                var msPerDay = msPerHour * 24;
+                var msPerMonth = msPerDay * 30;
+                var msPerYear = msPerDay * 365;
+                
+                var elapsed = current - previous;
+                
+                if (elapsed < msPerMinute) {
+                     return Math.round(elapsed/1000) + ' seconds ago';   
+                }
+                
+                else if (elapsed < msPerHour) {
+                     return Math.round(elapsed/msPerMinute) + ' minutes ago';   
+                }
+                
+                else if (elapsed < msPerDay ) {
+                     return Math.round(elapsed/msPerHour ) + ' hours ago';   
+                }
+            
+                else if (elapsed < msPerMonth) {
+                     return 'approximately ' + Math.round(elapsed/msPerDay) + ' days ago';   
+                }
+                
+                else if (elapsed < msPerYear) {
+                     return 'approximately ' + Math.round(elapsed/msPerMonth) + ' months ago';   
+                }
+                
+                else {
+                     return 'approximately ' + Math.round(elapsed/msPerYear ) + ' years ago';   
+                }
+            }
+             
+
+            function load_orders(ordertype) {
+
+                $("#order-type").text(ordertype);
+
+                $.get(`http://${SERVER_IP}:5000/api/kitchen/searchordertype/${ordertype}`, function( ) {}).done(function(result) {
+                    //console.log(result);
+                    if (result != null || result != undefined) {
+                      var row = $('#orders').empty();
+                      result.map(function(d, i) {
+
+                        var col = $("<div />").addClass("col-md-4").css({"color": "#000","margin-top": "25px"});
+                        var card = $("<div />").addClass("card");
+
+                        var cardbody = $("<div />").addClass("card-body bg-dark").css({"border-top-left-radius": "4px", "border-top-right-radius": "4px", "color": "#FFF"}); 
+
+                        var title = "";
+                        if (ordertype.includes("Dine-in")) {
+                            title = "Table";
+                        } else {
+                            title = "Order";
+                        }
+
+                        var fmt = 'MMMM DD, YYYY HH:mm:ss';
+                        var pasttime = `${moment(moment.utc(d.OrderDateTime).format(fmt)).fromNow(true)} ago`; 
+                        //var pasttime = timeDifference(new Date(),  moment(moment.utc(d.OrderDateTime).format(fmt))); 
+                        var orderdatetime = moment.utc(d.OrderDateTime).format('h:mm:ss a - MMMM Do YYYY');
+                        var detaillink = $("<a />").attr("href", "").text("Details").css({"position": "absolute", "right": "12px", "top": "52px","font-size": "12px"});
+                        detaillink.click(function(e) {
+                            e.preventDefault();
+                            $("#modal-details .modal-title").text(`${title} No. ${d.TableNumber}`);
+     
+                            $.get(`http://${SERVER_IP}:5000/api/kitchen/searchorders/${d.OrderId}`, function( ) {}).done(function(result) {
+                               var r = result[0];  
+
+                             
+                               var modaltbl = $("#modal-table tbody").empty();
+                               var tdtitles = ["Customer Name", "Contact Number", "Is Paid", "No. of Person", "Order Id", "Order Status", "Order Taken by", "Order Type", "Outlet", "Table Color"];
+                               var pd = "";
+                               if (r.IsPaid) {
+                                    pd = "Yes"
+                               } else {
+                                    pd = "Not yet Paid."
+                               }
+                               var tddescs = [r.CustomerName, r.ContactNumber, pd, r.NumberOfPerson, r.OrderId, r.OrderStatus, r.OrderTakenBy, r.OrderType, r.OutletName, r.TableColor];
+                                for (var i=0;i < 10;i++) {
+                                    var tr = $("<tr />");
+                                    var td_title = $("<td />").text(tdtitles[i]);
+                                    var td_desc = $("<td />").text(tddescs[i]);
+                                    tr.append(td_title);
+                                    tr.append(td_desc);
+                                    modaltbl.append(tr);
+                                }
+
+                        
+                             
+                               
+
+                               $("#modal-details .modal-body").append(modaltbl);
+                            }); 
+
+                         
+                            $("#modal-details").modal("show");
+                        });
+                        var cardtitle = $("<h5 />").text(`${title} No. ${d.TableNumber}`);
+                        var dt = $("<b />").text(`${pasttime} - ${orderdatetime}`).css({"position": "absolute", "right": "10px", "font-size": "11px", "top": "10px", "width": "80px"});
+                        cardtitle.append(detaillink);
+                        cardtitle.append(dt);
+                        var cardtext = $("<p />").addClass("card-text").text(d.Notes); 
+                        cardbody.append(cardtitle);
+                        cardbody.append(cardtext);
+
+                        var ul = $("<ul />").addClass("list-group list-group-flush");
+                       /* <div class="col-md-4"> 
+                            <div class="card"> 
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div> 
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"> 
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="check1" checked>
+                                            <label class="custom-control-label" for="check1">Check me</label>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item"> 
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="check2">
+                                            <label class="custom-control-label" for="check2">Check me</label>
+                                        </div>
+                                    </li> 
+                                </ul>
+                                <div class="card-footer text-center"> 
+                                    <button class="btn btn-success">DONE</button>
+                                </div>
+                            </div>  
+                        </div> */
+
+                        
+                        $.get(`http://${SERVER_IP}:5000/api/kitchen/searchorderitems/${d.OrderId}`, function( ) {}).done(function(result2) {
+
+                            result2.map(function(dd, ii) {
+                                var li = $("<li />").addClass("list-group-item");
+                                var div_control = $("<div />").addClass("custom-control custom-checkbox");
+                                //var bb = $("<b />").text(ii + 1);
+                                var input = $("<input />").attr("type", "checkbox")
+                                                          .attr("id", `check${dd.OrderId}-${ii}`)
+                                                          .attr("name", `check${dd.OrderId}-${ii}`)
+                                                          .addClass("save-cb-state")
+                                                          .addClass("custom-control-input");
+                                input.click(function(e) {
+
+                                    //e.preventDefault();
+                                   if ( input.attr("checked") == "checked") {
+                                        input.removeAttr("checked", "checked");
+                                   } else {
+                                        input.attr("checked", "checked");
+                                   }
+                                    if (validate_check()) {
+                                        $(`#btnDone${d.OrderId}`).prop("disabled", false);
+                                    } else {
+                                        $(`#btnDone${d.OrderId}`).prop("disabled", true);
+                                    }
+                                });
+                                var label = $("<label />").attr("for", `check${dd.OrderId}-${ii}`)
+                                                          .addClass("custom-control-label").text(`${dd.ItemName} - ${dd.Quantity}`);
+                                div_control.append(input).append(label);
+                                li.append(div_control);
+
+                                function validate_check() { 
+                                    var cnt_checked_boxes = 0;
+                                    $(`input[id^="check${dd.OrderId}-"]`).each(function() {
+                                        const attr = $(this).attr('checked');
+                                        if (typeof attr !== 'undefined' && attr !== false) {
+                                            cnt_checked_boxes++;
+                                        } 
+                                    }); 
+                                    var cnt_checkboxes = $(`input[id^="check${dd.OrderId}-"]`).length;
+                                    if (cnt_checkboxes != undefined) {
+                                        if (cnt_checked_boxes == cnt_checkboxes) {
+                                            return true;
+                                        } else {
+                                            return false;
+                                        }
+                                    } else {
+                                        return false;
+                                    }
+                                   
+                                }
+                                
+                                ul.append(li);
+                            });
+                            
+
+                        });
+
+                        var cardfooter = $("<div />").addClass("card-footer text-center");
+
+                        var buttonprint = $("<button />").attr("id", `btnPrint${d.OrderId}`).addClass("btn btn-success").text("PRINT");
+                        buttonprint.click(function(e) {
+                            e.preventDefault();
+
+                            $("#modal-print .modal-title").text(`Print Table No. ${d.TableNumber}`);
+
+                            $.get(`http://${SERVER_IP}:5000/api/kitchen/searchorderitems/${d.OrderId}`, function( ) {}).done(function(result3) {
+                                var orderdatetime = moment.utc(d.OrderDateTime).format('h:mm:ss a - MMMM Do YYYY');
+                                printDiv(d.TableNumber, d.OrderType, orderdatetime, d.OrderTakenBy, d.Notes, result3);
+                            });
+                            
+
+                            $(`input[id^="check${d.OrderId}-"]`).each(function() {
+                                $(this).prop("checked", true); 
+                                $(`#btnDone${d.OrderId}`).prop("disabled", false); 
+                            });
+
+                        });
+                        var buttondone = $("<button />").attr("id", `btnDone${d.OrderId}`).attr("disabled", "").addClass("btn btn-primary").text("DONE");
+                        buttondone.click(function(e) {
+                            e.preventDefault();
+                            var data = { "OrderId":  d.OrderId};
+                            $.ajax({
+                                type:"POST",
+                                //dataType:"json",
+                               // contentType: "application/json",
+                                //data:JSON.stringify(data),
+                                url: `http://${SERVER_IP}:5000/api/kitchen/orderstatus/served/${d.OrderId}`,
+                            }).done(function(response) {
+                                if (ordertype == "Dine-in") {
+                                    $("#btndinein").trigger('click');
+                                } else if (ordertype == "Take-out") {
+                                    $("#btntakeout").trigger('click');
+                                } else if (ordertype == "Pending Order Dine-in") {
+                                    $("#btnpendingorderdinein").trigger('click');
+                                } else if (ordertype == "Pending Order Take-out") {
+                                    $("#btnpendingordertakeout").trigger('click');
+                                }
+                                console.log('response update order status to served: ', response);
+                                 
+                            }).fail(function(xhr, textStatus, errorThrown){
+                                console.log("ERROR update order status to served: ", xhr.responseText) 
+                                console.log("errorThrown: ", errorThrown);
+                                console.log("textStatus: ", textStatus);
+                                console.log("xhr: ", xhr);
+
+
+                            });  
+
+
+
+                        });
+
+                        cardfooter.append(buttonprint);
+                        cardfooter.append(`&nbsp;`);
+                        cardfooter.append(buttondone);
+
+                        card.append(cardbody);
+                        card.append(ul);
+                        card.append(cardfooter)
+
+                        col.append(card);
+                        row.append(col);
+                      });
+                      
+                    } 
+                });   
+            }
+            
+ 
+            $("#btndinein").click(function(e) {
+                e.preventDefault();
+                
+                load_orders('Dine-in'); 
+                localStorage.setItem("load", 'Dine-in');
+            });
+
+            $("#btntakeout").click(function(e) {
+                e.preventDefault();
+               
+                load_orders('Take-out'); 
+                localStorage.setItem("load", 'Take-out');
+            });
+
+            $("#btnpendingorderdinein").click(function(e) {
+                e.preventDefault();
+                
+                load_orders('Pending Order Dine-in'); 
+                localStorage.setItem("load", 'Pending Order Dine-in');
+            });
+
+            $("#btnpendingordertakeout").click(function(e) {
+                e.preventDefault();
+              
+                load_orders('Pending Order Take-out');
+                localStorage.setItem("load", 'Pending Order Take-out');
+            });
+    
+
+            function printDiv(tableno, ordertype, orderdatetime, ordertakenby, note, items = []) { 
+                var a = window.open('', '', 'height=500, width=500');
+                a.document.write('<html>');
+                a.document.write('<head>');
+                a.document.write(`<style>
+                    * {
+                        font-size: 12px;
+                        font-family: 'Times New Roman';
+                    }
+                    
+                    td,
+                    th,
+                    tr,
+                    table {
+                        border-top: 1px solid black;
+                        border-collapse: collapse;
+                    }
+                    
+                    td.description,
+                    th.description {
+                        width: 75px;
+                        max-width: 75px;
+                    }
+                    
+                    td.quantity,
+                    th.quantity {
+                        width: 40px;
+                        max-width: 40px;
+                        word-break: break-all;
+                    }
+                    
+                    td.price,
+                    th.price {
+                        width: 40px;
+                        max-width: 40px;
+                        word-break: break-all;
+                    }
+                    
+                    .centered {
+                        text-align: center;
+                        align-content: center;
+                    }
+                    
+                    .ticket {
+                        width: 155px;
+                        max-width: 155px;
+                    }
+                    
+                    img {
+                        max-width: inherit;
+                        width: inherit;
+                    }
+                    
+                    @media print {
+                        .hidden-print,
+                        .hidden-print * {
+                            display: none !important;
+                        }
+                    } 
+                </style>`);
+                a.document.write('</head>');
+                a.document.write('<body>');
+                tr = ``;
+                items.map(function(d) {
+                    tr += `<tr>
+                        <td class="quantity" style="text-align: center;">${d.Quantity}</td>
+                        <td class="description">${d.ItemName}</td>
+                    </tr>`
+                });
+                a.document.write(`
+                <div id="ticket" class="ticket">
+                    <img src="./logo.png" alt="Logo">
+                    <p class="centered">Table No. ${tableno}
+                        <br><b>${ordertype}</b>
+                        <br>${orderdatetime}
+                    </p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="quantity">Qty</th>
+                                <th class="description">Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           ${tr}
+                        </tbody>
+                    </table>
+                    <p class="centered">Order Taken by: ${ordertakenby}
+                        <br> Note: ${note}
+                        <br><br>Thanks for your purchase!
+                        <br>Printed from Carlito's Kitchen</p>
+                      
+                    <br>
+                    <p>--------------------------------------</p>
+                    <br>
+                </div>
+                `);
+                a.document.write('</body></html>');
+                a.document.close();
+                a.print();
+            } 
+        });
+    </script>
+
+
+    <script>
+        var cbstate;
+        function storageGetSetCheckBox() {
+                      
+            if (localStorage.getItem('CBState') == undefined || localStorage.getItem('CBState')  == null) {
+                localStorage.setItem('CBState', '{}');
+            } else {
+                cbstate = JSON.parse(localStorage.getItem('CBState'));
+            }
+            for(var i in cbstate) {
+                var el = $('input[name="' + i + '"]');
+                //console.log('el: ', el);
+                if (el) el.prop("checked", true);
+            }
+          
+            $('input.save-cb-state').each(function( index ) {
+                
+                $(this).click(function() {
+                  
+                    if ($(this).attr("checked") == true) {
+                        
+                        console.log('is checked');
+                        cbstate[$(this).attr("name")] = true;
+                        console.log('save-cb-state')
+                    } else {
+                        console.log('not is checked');
+                        delete cbstate[$(this).attr("name")];
+                    }
+                    localStorage.setItem('CBState', JSON.stringify(cbstate));
+                });
+            }); 
+            /* var cbstate;
+            window.addEventListener('load', function() {
+              cbstate = JSON.parse(localStorage['CBState'] || '{}');
+              for(var i in cbstate) {
+                var el = document.querySelector('input[name="' + i + '"]');
+                if (el) el.checked = true;
+              }
+              var cb = document.getElementsByClassName('save-cb-state');
+              for(var i = 0; i < cb.length; i++) {            
+                cb[i].addEventListener('click', function(evt) {
+                  if (this.checked) {
+                    cbstate[this.name] = true;
+                  } else if (cbstate[this.name]) {
+                    delete cbstate[this.name];
+                  }
+                  localStorage.CBState = JSON.stringify(cbstate);
+                });
+              }
+            }); */
+            
+        }
+        </script> 
+</body>
+</html>

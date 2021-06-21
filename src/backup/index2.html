@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <title>Carlitos Restaurant</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/popper/popper.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Basic Table</h2>
+            <p>The .table class adds basic styling (light padding and horizontal dividers) to a table:</p>            
+            <table class="table" id="table1">
+              <thead>
+                <tr>
+                  <th>Restaurant Id</th>
+                  <th>Restaurant Name</th>
+                  <th>Short Description</th>
+                  <th>Description</th>
+                  <th>Restaurant Photo</th>
+                  <th>Is Active</th>  
+                </tr>
+              </thead>
+              <tbody>
+              
+              </tbody>
+            </table>
+          </div>
+        <script>
+            $(document).ready(function() {
+
+                function toBase64(arr) {
+                    //arr = new Uint8Array(arr) if it's an ArrayBuffer
+                    return btoa(
+                       arr.reduce((data, byte) => data + String.fromCharCode(byte), '')
+                    );
+                 }
+
+                $.get("http://192.168.0.20:5000/api/restaurants", function( ddd ) {
+                 //console.log(ddd);
+                    var tbody = $('#table1 tbody').empty();
+                    ddd.map(function(d, i) {
+                        var tr = $("<tr />");
+                        var td1 = $("<td />").text(d.RestaurantId);
+                        var td2 = $("<td />").text(d.RestaurantName);
+                        var td3 = $("<td />").text(d.ShortDescription);
+                        var td4 = $("<td />").text(d.Description); 
+                         //console.log(d.RestaurantPhoto.data);
+                        var img = $('<img>')
+                                    .attr('src', `data:image/png;base64,${toBase64( d.RestaurantPhoto.data )}`)
+                                    .css({'width': '280px', 'height': '200px'});
+                         
+                        var td5 = $("<td />").append( img );
+                        var td6 = $("<td />").text(d.IsActive); 
+                        tr.append(td1).append(td2).append(td3).append(td4).append(td5).append(td6);
+                        tbody.append(tr);   
+                    });
+                });
+            });
+            
+        </script>
+    </body>
+</html>

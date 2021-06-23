@@ -408,7 +408,7 @@
     <script>
         $(document).ready(function() {
 
-            var SERVER_IP = "192.168.0.20"; // CHANGE IP ADDRESS
+            var SERVER_IP = "192.168.1.5"; // CHANGE IP ADDRESS
             //var z = 0;
             if (localStorage.getItem("load") != undefined) {
                 console.log('Load not undefined');
@@ -628,7 +628,7 @@
 
                             $.get(`http://${SERVER_IP}:5000/api/kitchen/searchorderitems/${d.OrderId}`, function( ) {}).done(function(result3) {
                                 var orderdatetime = moment.utc(d.OrderDateTime).format('h:mm:ss a - MMMM Do YYYY');
-                                printDiv(d.TableNumber, d.OrderType, orderdatetime, d.OrderTakenBy, d.Notes, result3);
+                                printDiv(d.TableNumber, d.OrderType, orderdatetime, d.OrderTakenBy, d.Notes, d.CustomerName, result3);
                             });
                             
 
@@ -719,13 +719,13 @@
             });
     
 
-            function printDiv(tableno, ordertype, orderdatetime, ordertakenby, note, items = []) { 
+            function printDiv(tableno, ordertype, orderdatetime, ordertakenby, note, customername, items = []) { 
                 var a = window.open('', '', 'height=500, width=500');
                 a.document.write('<html>');
                 a.document.write('<head>');
                 a.document.write(`<style>
                     * {
-                        font-size: 12px;
+                        font-size: 14px;
                         font-family: 'Times New Roman';
                     }
                     
@@ -739,8 +739,9 @@
                     
                     td.description,
                     th.description {
-                        width: 75px;
-                        max-width: 75px;
+                        width: 100px;
+                        max-width: 100px;
+                        font-weight: bold;
                     }
                     
                     td.quantity,
@@ -748,6 +749,7 @@
                         width: 40px;
                         max-width: 40px;
                         word-break: break-all;
+                        font-weight: bold;
                     }
                     
                     td.price,
@@ -755,6 +757,7 @@
                         width: 40px;
                         max-width: 40px;
                         word-break: break-all;
+                        font-weight: bold;
                     }
                     
                     .centered {
@@ -763,8 +766,8 @@
                     }
                     
                     .ticket {
-                        width: 155px;
-                        max-width: 155px;
+                        width: 158px;
+                        max-width: 158px;
                     }
                     
                     img {
@@ -791,7 +794,7 @@
                 a.document.write(`
                 <div id="ticket" class="ticket">
                     <img src="./logo.png" alt="Logo">
-                    <p class="centered">Table No. ${tableno}
+                    <p class="centered" style="font-weight: bold;">Table No. ${tableno}
                         <br><b>${ordertype}</b>
                         <br>${orderdatetime}
                     </p>
@@ -806,13 +809,14 @@
                            ${tr}
                         </tbody>
                     </table>
-                    <p class="centered">Order Taken by: ${ordertakenby}
-                        <br> Note: ${note}
+                    <p class="centered" style="font-weight: bold;">Order Taken by: ${ordertakenby}
+                        <br>Note: ${note}
+                        <br>Customer: ${customername}
                         <br><br>Thanks for your purchase!
                         <br>Printed from Carlito's Kitchen</p>
                       
                     <br>
-                    <p>--------------------------------------</p>
+                    <p>---------------------------------</p>
                     <br>
                 </div>
                 `);

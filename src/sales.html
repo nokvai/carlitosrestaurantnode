@@ -29,7 +29,7 @@
             width: 100%; 
         }
     </style>
-    
+    <script type="text/javascript" src="js/sort-table.js"></script>
 </head>
 
 <body id="page-top">
@@ -83,7 +83,9 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
+                    <div id="img-loading" style="display: none; z-index: 9999; width: 100%; height: 100%; position: absolute;">
+                        <img src="img/loading.gif" style="width: 100%; height: 100%;">
+                    </div>
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Sales</h1>
                     <!-- <p class="mb-4 pl-2">Select a Start and End Date to Populate Sales.</p> -->
@@ -92,18 +94,18 @@
                             <div class="col-md-8"> 
                                 <form id="searchform" method="GET">
                                     <div class="row"> 
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label>Start Date</label> 
-                                            <input id="datepicker_start" name="startdate" width="150" />
+                                            <input id="datepicker_start" name="startdate" width="200" />
                                             <script>
                                                 $('#datepicker_start').datepicker({
                                                     uiLibrary: 'bootstrap4'
                                                 });
                                             </script> 
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label>End Date</label> 
-                                            <input id="datepicker_end" name="enddate" width="150" />
+                                            <input id="datepicker_end" name="enddate" width="200" />
                                             <script>
                                                 $('#datepicker_end').datepicker({
                                                     uiLibrary: 'bootstrap4'
@@ -116,7 +118,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div  class="table-responsive mt-2">          
-                                                <table id="datediff" class="table">
+                                                <table id="datediff" class="table js-sort-table" >
                                                     <thead>
                                                     <tr>
                                                         <th>Day(s)</th>
@@ -179,14 +181,14 @@
                                    </div> 
                                     <div class="row pt-3">
                                         <div class="col-md-12">
-                                            <table class="table table-bordered table-striped" id="sales-count">
+                                            <table class="table table-bordered table-striped js-sort-table" id="sales-count">
                                                 <thead>
                                                   <tr>
                                                     <th>No.</th>
                                                     <th>Name</th>
                                                     <th>Description</th>
                                                     <th>Category</th>
-                                                    <th>Count</th> 
+                                                    <th>Count</th>
                                                   </tr>
                                                 </thead>
                                                 <tbody>
@@ -347,12 +349,10 @@
 
 
     <script src="js/vanillaSelectBox.js"></script>
-
-
-
+ 
     <script>
 
-        var SERVER_IP = "192.168.254.160";
+        var SERVER_IP = "192.168.1.5";
 
         $(document).ready(function() { 
 
@@ -477,6 +477,7 @@
             });
 
             function loadnamefilter() {
+                $("#img-loading").show();
                  //---------------------------------------------------------------------------------------
                  var selcat = getValues("selectCategory"); 
                  var arr = selcat.map(function(cat) { return "'" + cat + "'" }).join(",");
@@ -498,6 +499,8 @@
                      }); 
 
                      $(".multi").css({"min-width": "400px"});
+
+                     $("#img-loading").hide();
  
                      // setValues(selectBoxCategory, ['Alpine', 'Audi', 'DACIA']); 
                      //$("#btngetvalues").click(function() {
@@ -540,6 +543,7 @@
         });
 
          function loaditems(itemids) {
+            $("#img-loading").show();
             $.get(`http://${SERVER_IP}:5000/api/items/list?itemids=${itemids}`, function( ) {}).done(function(result) { 
 
                 //console.log('list: ', result);
@@ -574,6 +578,14 @@
                              $("td#sumofcount").text(totalcount);
                          });   
                  });  
+
+                 $("#sales-count > thead > tr th:nth-child(1)").addClass("js-sort-number").attr("title", "class=&quot;js-sort-number&quot;");
+                 $("#sales-count > thead > tr th:nth-child(2)").addClass("js-sort-string").attr("title", "class=&quot;js-sort-string&quot;");
+                 $("#sales-count > thead > tr th:nth-child(4)").addClass("js-sort-string").attr("title", "class=&quot;js-sort-string&quot;");
+                 $("#sales-count > thead > tr th:nth-child(5)").addClass("js-sort-number").attr("title", "class=&quot;js-sort-number&quot;");
+                 //sortTable(document.getElementById('sales-count'));
+
+                 $("#img-loading").hide();
              });
          }
     </script>

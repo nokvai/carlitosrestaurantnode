@@ -258,24 +258,25 @@
     </a>
 
     <!-- Logout Modal-->
-    <!-- <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="detailsModalLabel">Order Id</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">
+
+                </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
      <!-- The Modal -->
      <div class="modal" id="modal-delete">
@@ -452,7 +453,62 @@
                             var td12 = $("<td />").text(orderdatetime); 
                             var td13 = $("<td />").text(paiddate); 
                             var td14 = $("<td />").text(d.IsPaid);
-                            var td15 = $("<td />").text(formatter.format(PaymentAmount));
+                            var showdetails = $("<a />").attr("href", "#").text("Show Details");
+                            showdetails.click(function(e) {
+                                e.preventDefault();
+                                var modaltitle = $("#detailsModal .modal-title").empty();
+                                var modalbody = $("#detailsModal .modal-body").empty();
+                                 
+                                modaltitle.text(`Order Id: ${d.OrderId}`);
+
+                                $.get(`http://${SERVER_IP}:5000/api/kitchen/searchorderitems/${d.OrderId}`, function() {}).done(function(result3) {
+                                   
+                                    modalbody.append(`
+                                    <div class="table-responsive">          
+                                        <table id="orderitemstable" class="table table-bordered table-striped">
+                                          <thead>
+                                            <tr>
+                                              <th>OrderItemsId</th>
+                                              <th>ItemId</th>
+                                              <th>ItemName</th>
+                                              <th>ItemDescription</th>
+                                              <th>ItemPrice</th>
+                                              <th>Quantity</th> 
+                                            </tr>
+                                          </thead>
+                                          <tbody> 
+                                          </tbody> 
+                                        </table>
+                                    </div>
+                                    `);
+
+                                   var tblorderitems = modalbody.find("#orderitemstable > tbody").empty();
+                                   // OrderItemsId, OrderId, ItemId, ItemName, ItemDescription, ItemCost, ItemPrice, Quantity, DateModified
+                                   result3.map(function(ddd) { 
+                                        var oi_tr = $("<tr />");
+                                        var oi_td1 = $("<td />").text(ddd.OrderItemsId);
+                                        var oi_td2 = $("<td />").text(ddd.ItemId);
+                                        var oi_td3 = $("<td />").text(ddd.ItemName);
+                                        var oi_td4 = $("<td />").text(ddd.ItemDescription);
+                                        var oi_td5 = $("<td />").text(ddd.ItemPrice);
+                                        var oi_td6 = $("<td />").text(ddd.Quantity);
+
+                                        oi_tr.append(oi_td1).append(oi_td2).append(oi_td3).append(oi_td4).append(oi_td5).append(oi_td6);
+                                        tblorderitems.append(oi_tr); 
+
+                                   });
+                                  
+                                    
+                                    $("#detailsModal").modal("show");
+                               
+                               
+                                });
+
+
+                                
+                            });
+                            var pa = formatter.format(PaymentAmount)
+                            var td15 = $("<td />").append(pa).append("<br />").append(showdetails);
                           
                             var btndelete = $("<button />").addClass("btn btn-danger").text("Delete");
                             btndelete.click(function(e) {

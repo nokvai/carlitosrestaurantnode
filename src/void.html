@@ -284,7 +284,7 @@
                                             <input type="number" class="form-control" id="OrderNumber">
                                         </div>
                                         <div class="form-group">
-                                            <label for="NumberOfPerson">Number Of Person</label>
+                                            <label for="NumberOfPerson"><i class="fas fa-star" style="color: yellow;"></i> Number Of Person</label>
                                             <input type="number" class="form-control" id="NumberOfPerson" value="1">
                                         </div> 
                                         <div class="form-group">
@@ -294,6 +294,7 @@
                                                 <option>Take-out</option>
                                                 <option>Pending Order Dine-in</option>
                                                 <option>Pending Order Take-out</option>
+                                                <option>Hotel</option>
                                             </select> 
                                         </div>  
                                     </div>
@@ -317,7 +318,7 @@
                                 </div>
                                 <div class="row" style="padding-bottom: 50px; padding-top: 20px;">
                                     <div class="col-md-12" style="display: flex; align-items: center; justify-content: center;">
-                                        <button id="btnSubmit" type="submit" class="btn btn-success" style="min-width: 280px; min-height: 65px;">Modify</button>
+                                        <button id="btnSubmit" type="submit" class="btn btn-success" style="min-width: 280px; min-height: 65px;" disabled>Modify</button>
                                     </div>
                                 </div>
                             </form>
@@ -681,6 +682,11 @@
  
             $("#TableNumber").keyup(function() {
                 $("#OrderNumber").val($(this).val());
+                if ($(this).val() != '') {
+                    $("#btnSubmit").prop("disabled", false);
+                } else {
+                    $("#btnSubmit").prop("disabled", true);
+                }
             });
  
             $("#OrderType").change(function() {
@@ -842,6 +848,8 @@
                     ordertypeid = 3;
                 } else if ($('#OrderType').val() == 'Pending Order Take-out') { 
                     ordertypeid = 4;
+                } else if ($('#OrderType').val() == 'Hotel') { 
+                    ordertypeid = 5;
                 }
                 var outletid = 0;
                 if ($('#Outlet').val() == 'Ground Floor') {

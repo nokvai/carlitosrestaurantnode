@@ -81,7 +81,7 @@
             <div id="content"> 
 
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"> 
-                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"> 
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="width: 15rem!important;"> 
                         <div id="div-search" class="input-group"> 
                             <input id="search" type="text" class="form-control bg-light border-0 small" placeholder="Search for Table No."
                                 aria-label="Search" aria-describedby="basic-addon2">
@@ -136,6 +136,11 @@
                         &nbsp;
                         <li class="nav-item dropdown no-arrow"> 
                             <button id="btnpendingordertakeout" type="buttom" class="btn btn-danger">Pending Order Take-out</button>
+                        </li>
+
+                        &nbsp;
+                        <li class="nav-item dropdown no-arrow"> 
+                            <button id="btnhotel" type="buttom" class="btn btn-secondary">Hotel</button>
                         </li>
                     </ul> 
                 </nav>
@@ -480,7 +485,11 @@
                         var title = "";
                         if (ordertype.includes("Dine-in")) {
                             title = "Table";
-                        } else {
+                        }  
+                        if (ordertype.includes("Take-out")) {
+                            title = "Order";
+                        }
+                        if (ordertype.includes("Hotel")) {
                             title = "Order";
                         }
 
@@ -514,10 +523,6 @@
                                     tr.append(td_desc);
                                     modaltbl.append(tr);
                                 }
-
-                        
-                             
-                               
 
                                $("#modal-details .modal-body").append(modaltbl);
                             }); 
@@ -627,7 +632,7 @@
                             $("#modal-print .modal-title").text(`Print Table No. ${d.TableNumber}`);
 
                             $.get(`http://${SERVER_IP}:5000/api/kitchen/searchorderitems/${d.OrderId}`, function( ) {}).done(function(result3) {
-                                var orderdatetime = moment.utc(d.OrderDateTime).format('h:mm:ss a - MMMM Do YYYY');
+                                var orderdatetime = moment.utc(d.OrderDateTime).format('MMMM Do YYYY - h:mm:ss a');
                                 printDiv(d.TableNumber, d.OrderType, orderdatetime, d.OrderTakenBy, d.Notes, d.CustomerName, result3);
                             });
                             
@@ -657,7 +662,10 @@
                                     $("#btnpendingorderdinein").trigger('click');
                                 } else if (ordertype == "Pending Order Take-out") {
                                     $("#btnpendingordertakeout").trigger('click');
+                                } else if (ordertype == "Hotel") {
+                                    $("#btnhotel").trigger('click');
                                 }
+ 
                                 console.log('response update order status to served: ', response);
                                  
                             }).fail(function(xhr, textStatus, errorThrown){
@@ -717,6 +725,13 @@
                 load_orders('Pending Order Take-out');
                 localStorage.setItem("load", 'Pending Order Take-out');
             });
+
+            $("#btnhotel").click(function(e) {
+                e.preventDefault();
+              
+                load_orders('Hotel');
+                localStorage.setItem("load", 'Hotel');
+            });
     
 
             function printDiv(tableno, ordertype, orderdatetime, ordertakenby, note, customername, items = []) { 
@@ -739,8 +754,9 @@
                     
                     td.description,
                     th.description {
-                        width: 100px;
-                        max-width: 100px;
+                        text-align: left;
+                        width: 200px;
+                        max-width: 200px;
                         font-weight: bold;
                     }
                     
@@ -766,8 +782,8 @@
                     }
                     
                     .ticket {
-                        width: 158px;
-                        max-width: 158px;
+                        //width: 158px;
+                        //max-width: 158px;
                     }
                     
                     img {
@@ -781,6 +797,13 @@
                             display: none !important;
                         }
                     } 
+                    
+                    .flex-center {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                                    
                 </style>`);
                 a.document.write('</head>');
                 a.document.write('<body>');
@@ -791,32 +814,62 @@
                         <td class="description">${d.ItemName}</td>
                     </tr>`
                 });
+
+                var order_label  = "";
+                var otb = "", nt = "", cname = "";
+
+                if (ordertype == "Dine-in") {
+                    order_label = "Table No."; 
+                } else if (ordertype == "Take-out") {
+                    order_label = "Order No.";
+                } else if (ordertype == "Pending Order Dine-in") {
+                    order_label = "Table No.";
+                } else if (ordertype == "Pending Order Take-out") {
+                    order_label = "Order No.";
+                }
+
+                if (ordertakenby != "") {
+                    otb = `<br>Order Taken by: ${ordertakenby}`; 
+                }
+
+                if (note != "") {
+                    nt = `<br>Note: ${note}`; 
+                }
+
+                if (customername != "") {
+                    cname = `<br>Customer: ${customername}`;
+                }
+
                 a.document.write(`
                 <div id="ticket" class="ticket">
                     <img src="./logo.png" alt="Logo">
-                    <p class="centered" style="font-weight: bold;">Table No. ${tableno}
+                    <p class="centered" style="font-weight: bold;">${order_label} ${tableno}
                         <br><b>${ordertype}</b>
-                        <br>${orderdatetime}
+                       
                     </p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="quantity">Qty</th>
-                                <th class="description">Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                           ${tr}
-                        </tbody>
-                    </table>
-                    <p class="centered" style="font-weight: bold;">Order Taken by: ${ordertakenby}
-                        <br>Note: ${note}
-                        <br>Customer: ${customername}
+                    <div class="flex-center">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="quantity">Qty</th>
+                                    <th class="description">Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            ${tr}
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="centered" style="font-weight: bold;">
+                        ${orderdatetime}
+                        ${otb}
+                        ${nt}
+                        ${cname}
                         <br><br>Thanks for your purchase!
                         <br>Printed from Carlito's Kitchen</p>
                       
                     <br>
-                    <p>---------------------------------</p>
+                    <p class="centered">--------------------------------------------------</p>
                     <br>
                 </div>
                 `);

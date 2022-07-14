@@ -30,7 +30,7 @@
           </div>
         <script>
             $(document).ready(function() {
-
+              var SERVER_IP = "{{my_ip}}";
                 function toBase64(arr) {
                     //arr = new Uint8Array(arr) if it's an ArrayBuffer
                     return btoa(
@@ -38,7 +38,7 @@
                     );
                  }
 
-                $.get(`http://${process.env.SERVER_IP}:5000/api/restaurants`, function( ddd ) {
+                $.get(`http://${SERVER_IP}:5000/api/restaurants`, function( ddd ) {
                  //console.log(ddd);
                     var tbody = $('#table1 tbody').empty();
                     ddd.map(function(d, i) {

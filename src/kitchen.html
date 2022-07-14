@@ -252,8 +252,10 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
+                        <span>Developed by NokNokWare Software Developement Services</span>
+                        <br/>
+                        <br/>
                         <span>Copyright &copy; Carlitos Restaurant 2021</span>
-                   
                     </div>
                 </div>
             </footer>
@@ -413,7 +415,7 @@
     <script>
         $(document).ready(function() {
 
-            var SERVER_IP = "192.168.1.5"; // CHANGE IP ADDRESS
+            var SERVER_IP = "{{my_ip}}"; //"192.168.0.20"; // CHANGE IP ADDRESS
             //var z = 0;
             if (localStorage.getItem("load") != undefined) {
                 console.log('Load not undefined');

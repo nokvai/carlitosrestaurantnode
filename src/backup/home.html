@@ -744,10 +744,11 @@
     <script src="js/demo/chart-pie-demo.js"></script>
     <script>
         $(document).ready(function() {
-            $.get("http://192.168.0.20:5000/getsessionloginvalue", function( data ) { 
+            var SERVER_IP = "{{my_ip}}";
+            $.get(`http://${SERVER_IP}:5000/getsessionloginvalue`, function( data ) { 
                 //console.log(  );
                 var userloginid = data.response;
-                $.get("http://192.168.0.20:5000/api/users/" + userloginid, function( dd ) { 
+                $.get(`http://${SERVER_IP}:5000/api/users/` + userloginid, function( dd ) { 
                     console.log( dd[0] );
                     $('#staffname').text(dd[0].StaffName + ' (' +  dd[0].RoleName + ')' );
                 });

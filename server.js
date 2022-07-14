@@ -1,5 +1,6 @@
 //Initiallising node modules
 var express = require("express");
+require('dotenv').config();
 var bodyParser = require("body-parser");
 var sql = require("mssql");
 var app = express(); 
@@ -48,10 +49,10 @@ app.use(express.static(__dirname + '/src'));
 
 //Initialising connection string
 var dbConfig = {
-    user:  "sa",
-    password: "123456",
-    server: "localhost",
-    database: "CarlitosPOS"
+    user:  process.env.DB_USER,
+    password: process.env.DB_PASS,
+    server: process.env.DB_SERVER,
+    database: process.env.DB_NAME
 };
 
  // call apis from export
@@ -169,14 +170,15 @@ var dbConfig = {
   //     return res.send({ response: req.session.UserLoginId });
   //   } 
   // });
-  
-app.get('/', function(request, response) {
-  response.sendFile(path.join(__dirname+'/src/home.html'));  
-});
 
-app.get('/kitchen', function(request, response) {
-  response.sendFile(path.join(__dirname+'/src/kitchen.html'));  
-});
+  
+// app.get('/', function(request, response) {
+//   response.sendFile(path.join(__dirname+'/src/home.html'));
+// });
+
+// app.get('/kitchen', function(request, response) {
+//   response.sendFile(path.join(__dirname+'/src/kitchen.html'));  
+// });
  
 
   
@@ -187,6 +189,16 @@ app.engine('html', cons.swig)
 app.set('views', path.join(__dirname, 'src'));
 app.set('view engine', 'html');
 
+var MY_IP = process.env.SERVER_IP;
+
+app.get('/', function(req, res, next) {
+  res.render('home', { my_ip: MY_IP });
+});
+
+app.get('/kitchen', function(req, res, next) {
+  res.render('kitchen', { my_ip: MY_IP });
+});
+ 
 app.get('/void', function(req, res, next) {
     res.render('void', { orderid: req.query.id });
 });
@@ -210,9 +222,10 @@ app.get('/sales', function(req, res, next) {
 app.get('/kdestorque4c98d92e-b372-4c43-9773-e6b86c24a3a4', function(req, res, next) {
   res.render('kdestorque', { startdate: req.query.startdate, enddate: req.query.enddate });
 });
- 
+
+
 //Setting up server
 var server = app.listen(process.env.PORT || 5000, function () {
-  var port = server.address().port;
+  var port = server.address().port; 
   console.log("App now running on port", port);
 });

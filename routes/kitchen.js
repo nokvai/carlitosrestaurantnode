@@ -16,7 +16,7 @@ module.exports = function(app, bParser, axios, dbConfig, sql) {
     }
  
     app.get("/api/kitchen/searchorders/:orderid", function(req, res) {
-      var query = `SELECT * FROM view_orders WHERE OrderStatus <> 'Served' AND OrderId = ${req.params.orderid} ORDER BY OrderDateTime ASC`; 
+      var query = `SELECT * FROM view_orders WHERE OrderId = ${req.params.orderid} AND OrderStatus <> 'Served' ORDER BY OrderDateTime ASC`; 
       executeQuery(query, res);
     });
 

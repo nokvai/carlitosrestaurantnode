@@ -200,7 +200,7 @@ app.get('/kitchen', function(req, res, next) {
 });
  
 app.get('/void', function(req, res, next) {
-    res.render('void', { orderid: req.query.id });
+    res.render('void', { orderid: req.query.id, my_ip: MY_IP });
 });
  
 app.get('/print', function(req, res, next) {
@@ -210,17 +210,18 @@ app.get('/print', function(req, res, next) {
       ordertype: req.query.ordertype, 
       orderdatetime: req.query.orderdatetime, 
       ordertakenby: req.query.ordertakenby,
-      notes: req.query.notes
+      notes: req.query.notes,
+      my_ip: MY_IP
     });
 });
 
 app.get('/sales', function(req, res, next) {
   // response.sendFile(path.join(__dirname+'/src/sales.html'));  
-  res.render('sales', { startdate: req.query.startdate, enddate: req.query.enddate });
+  res.render('sales', { startdate: req.query.startdate, enddate: req.query.enddate, my_ip: MY_IP });
 });
 
 app.get('/kdestorque4c98d92e-b372-4c43-9773-e6b86c24a3a4', function(req, res, next) {
-  res.render('kdestorque', { startdate: req.query.startdate, enddate: req.query.enddate });
+  res.render('kdestorque', { startdate: req.query.startdate, enddate: req.query.enddate, my_ip: MY_IP });
 });
 
 

@@ -354,11 +354,9 @@
     <script src="js/vanillaSelectBox.js"></script>
  
     <script>
-
-        var SERVER_IP = "{{my_ip}}";
-
-        $(document).ready(function() { 
-
+        var SERVER_IP = "{{my_ip}}"; // CHANGE IP ADDRESS
+        $(document).ready(function() {
+            
             $(".gj-icon").addClass("fa fa-calendar").removeClass("gj-icon").text("").attr('aria-hidden', "true").click(function() {
                
                setTimeout(function() {
@@ -448,7 +446,8 @@
     <script>  
         $(document).ready(function() {
 
-            $.get(`http://${SERVER_IP}:5000/api/items/category`, function( ) {}).done(function(result) {  
+            $.get(`http://${SERVER_IP}:5000/api/items/category`, function( ) {}).done(function(result) { 
+                console.log('category: ', result); 
                 let selectCat = document.getElementById("selectCategory");
                 result.map(function(d) { 
                    // console.log(d.ItemCategoryName);

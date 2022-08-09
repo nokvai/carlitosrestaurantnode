@@ -217,7 +217,7 @@ app.get('/print', function(req, res, next) {
 
 app.get('/sales', function(req, res, next) {
   // response.sendFile(path.join(__dirname+'/src/sales.html'));  
-  res.render('sales', { startdate: req.query.startdate, enddate: req.query.enddate, my_ip: MY_IP });
+  res.render('sales', { startdate: req.query.startdate, enddate: req.query.enddate, pos: req.query.pos, resetcount: req.query.resetcount, my_ip: MY_IP });
 });
 
 app.get('/kdestorque4c98d92e-b372-4c43-9773-e6b86c24a3a4', function(req, res, next) {

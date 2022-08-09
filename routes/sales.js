@@ -71,19 +71,24 @@ module.exports = function(app, bParser, axios, dbConfig, sql) {
         });
     } 
 
+    app.get("/api/sales/resetcounts", function(req, res) {
+        var query = `SELECT * FROM ResetCount WHERE POS = '${req.query.pos}'`;
+        executeQuery(query, res);
+    });
    
-    app.get("/api/sales/sumallpayments/", function(req, res) { 
-        var query = `SELECT SUM(PaymentAmount) AS PaymentSUM FROM Payments WHERE DateModified BETWEEN '${req.query.startdate}' AND '${req.query.enddate}'`;
+    app.get("/api/sales/sumallpayments/", function(req, res) {
+    
+        var query = `SELECT SUM(PaymentAmount) AS PaymentSUM FROM Payments WHERE POS = '${req.query.pos}' AND ResetCount = ${parseInt(req.query.resetcount)} AND DateModified BETWEEN '${req.query.startdate}' AND '${req.query.enddate}'`;
         executeQuery(query, res);
     });
  
     app.get("/api/sales/orders", function(req, res) {
-        var query = `SELECT * FROM view_orderpayments WHERE IsPaid = 1 AND PaidDate BETWEEN '${req.query.startdate}' AND '${req.query.enddate}' ORDER BY PaidDate ASC`;
+        var query = `SELECT * FROM view_orderpayments WHERE POS = '${req.query.pos}' AND ResetCount = ${parseInt(req.query.resetcount)} AND IsPaid = 1 AND PaidDate BETWEEN '${req.query.startdate}' AND '${req.query.enddate}' ORDER BY PaidDate ASC`;
         executeQuery(query, res);
     });
  
     app.get("/api/sales/payment/:orderid", function(req, res) {
-        var query = `SELECT PaymentAmount FROM Payments WHERE OrderId = ${req.params.orderid}`;
+        var query = `SELECT PaymentAmount FROM Payments WHERE OrderId = ${parseInt(req.params.orderid)}`;
         executeQuery(query, res);
     });
       
@@ -105,7 +110,7 @@ module.exports = function(app, bParser, axios, dbConfig, sql) {
     });
   
     app.get("/api/salescount/", function(req, res) {
-        var query = `select SUM(CNT) AS Count FROM view_salescount WHERE PaidDate BETWEEN '${req.query.startdate}' AND '${req.query.enddate}' AND ItemId = ${req.query.itemid}`;
+        var query = `select SUM(CNT) AS Count FROM view_salescount WHERE POS = '${req.query.pos}' AND ResetCount = ${parseInt(req.query.resetcount)} AND PaidDate BETWEEN '${req.query.startdate}' AND '${req.query.enddate}' AND ItemId = ${req.query.itemid}`;
         executeQuery(query, res);
     });
 

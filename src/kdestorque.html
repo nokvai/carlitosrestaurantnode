@@ -118,11 +118,29 @@
                                                     });
                                                 </script> 
                                             </div>
+                                            <div class="col-md-3">
+                                                <label>POS</label> 
+                                                <select id="pos" class="form-control" name="pos" width="200">
+                                                    <option value="Terminal 1">Terminal 1</option>
+                                                    <option value="Terminal 2">Terminal 2</option>
+                                                </select>
+                                                
+                                            </div>
                                             
                                             <div class="col-md-2">
                                                 <button id="btnSearch" style="margin-top: 30px; " class="btn btn-success">Search</button>
                                             </div>
-                                            <div class="col-md-8">
+                                            
+                                            <div class="col-md-3">
+                                                <div>
+                                                    <label>Reset Count: </label> 
+                                                    <select class="form-control" id="reset_count" name="reset_count">
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-12">
                                                 <div  class="table-responsive mt-2">          
                                                     <table id="datediff" class="table">
                                                       <thead>
@@ -365,19 +383,39 @@
                 enddate.val(localStorage.getItem('enddate'));
             }
 
+            if (localStorage.getItem('pos') != null) { 
+                setTimeout(function() {
+                    var pos = $('#pos');
+                    pos.val(localStorage.getItem('pos')).trigger('change'); 
+                }, 100); 
+            }
+
+            if (localStorage.getItem('reset_count') != null) { 
+                setTimeout(function() {
+                    var reset_count = $('#reset_count');
+                    reset_count.val(localStorage.getItem('reset_count')).trigger('change'); 
+                }, 100); 
+            }
+
             $('#btnSearch').click(function(e) {
                 e.preventDefault(); 
                 //var type = $('select[name="searchtype"]');
                 var startdate = $('input[name="startdate"]');
                 var enddate = $('input[name="enddate"]');
+                var pos = $('#pos option:selected');
+                var reset_count = $('#reset_count option:selected');
                
                 //console.log('type', type.val());
                 console.log('startdate', startdate.val());
                 console.log('enddate', enddate.val()); 
+                console.log('pos', pos.text());
+                console.log('reset_count', reset_count.val());
 
                 //localStorage.setItem('type', type.val());
                 localStorage.setItem('startdate', startdate.val());
                 localStorage.setItem('enddate', enddate.val());
+                localStorage.setItem('pos', pos.text());
+                localStorage.setItem('reset_count', reset_count.val());
  
                 $("#searchform").submit();
                 
@@ -385,6 +423,9 @@
           
             var start = moment(new Date($('input[name="startdate"]').val()), 'DD-MM-YYYY'); 
             var end = moment(new Date($('input[name="enddate"]').val()), 'DD-MM-YYYY').add(23, 'hours').add(59, 'minutes').add(59, 'seconds'); 
+            var pos = localStorage.getItem('pos');
+            var reset_count = localStorage.getItem('reset_count');
+            
             //$("#datediff").append(`Day(s): ${} <br> Week(s): ${end.diff(start, 'weeks')} <br> Month(s): ${end.diff(start, 'months')} <br> Year(s): ${end.diff(start, 'years')}`);
             end.add(1, 'second');
             var tbl = $("#datediff > tbody").empty();
@@ -402,8 +443,22 @@
             var end_format = end.format("YYYY-MM-DD HH:mm:ss");
 
             console.log(`start: ${start_format} and end: ${end_format}`);
+
+            $.get(`http://${SERVER_IP}:5000/api/sales/resetcounts?pos=${pos}`, function( ) {}).done(function(result) { 
+                    var rc = $('#reset_count').empty();
+                    result.map(function(d) { 
+                        let string = d.ResetCount.toString().padStart(3, '0');
+                        console.log("ResetCount: ", string);
+                        rc.append("<option value=" + d.ResetCount + ">" + string + "</option>") 
+                    });
+
+                    // setTimeout(function() {
+                    //     var max_value = $('#reset_count option:last').val();
+                    //     $('#reset_count').val(max_value).trigger('change');
+                    // }, 100); 
+             });
  
-            $.get(`http://${SERVER_IP}:5000/api/sales/sumallpayments?startdate=${start_format}&enddate=${end_format}`, function( ) {}).done(function(result) { 
+            $.get(`http://${SERVER_IP}:5000/api/sales/sumallpayments?pos=${pos}&resetcount=${reset_count}&startdate=${start_format}&enddate=${end_format}`, function( ) {}).done(function(result) { 
                  
                 var paymentSUM =  result[0].PaymentSUM; 
                 var formatter = new Intl.NumberFormat('en-US', {
@@ -422,7 +477,7 @@
                 currency: 'PHP', 
             });
             
-            $.get(`http://${SERVER_IP}:5000/api/sales/orders?startdate=${start_format}&enddate=${end_format}`, function( ) {}).done(function(result) { 
+            $.get(`http://${SERVER_IP}:5000/api/sales/orders?pos=${pos}&resetcount=${reset_count}&startdate=${start_format}&enddate=${end_format}`, function( ) {}).done(function(result) { 
 
                 var tbl = $("#ordertable tbody").empty();
                 //console.log('result: ', result);
